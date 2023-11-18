@@ -1,42 +1,104 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* html,
+body {
+	@apply h-full;
+} */
+
+h1,
+h2,
+h3 {
+	font-family: 'Inter', sans-serif !important;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+	background-image: radial-gradient(at 0% 0%, rgba(var(--color-primary-400) / 0.33) 0px, transparent 50%),
+		radial-gradient(at 98% 1%, rgba(var(--color-secondary-500) / 0.33) 0px, transparent 50%);
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: 'Open Sans', sans-serif;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@layer base {
+	.font-vn {
+		font-family: 'Be Vietnam Pro', sans-serif;
+	}
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.link {
+	color: #0fba81;
+}
+
+.link:hover {
+	text-decoration: underline;
+}
+
+.typed-cursor {
+	@apply text-[#d97706];
+}
+
+.app-rail-label {
+	text-align: start;
+}
+
+.tree-summary-symbol {
+	display: none;
+}
+
+.tree-item-summary[aria-expanded] .tree-summary-symbol {
+	display: inline-block;
+}
+.btn,
+.btn-icon {
+	@apply rounded-lg;
+}
+
+.dui-input,
+.dui-select {
+	@apply rounded;
+}
+
+.dui-input {
+	@apply px-3 text-sm h-10;
+}
+
+.dui-input::placeholder {
+	@apply text-sm;
+}
+
+.dui-input:focus,
+.dui-select:focus {
+	outline: 0;
+	border: 1px solid #2460e5;
+}
+
+.dui-modal-box {
+	@apply translate-x-60 -translate-y-60 scale-0 duration-300;
+}
+.dui-modal-open .dui-modal-box,
+.dui-modal-toggle:checked + .dui-modal .dui-modal-box,
+.dui-modal:target .dui-modal-box,
+.dui-modal[open] .dui-modal-box {
+	@apply translate-y-0 translate-x-0 scale-100;
 }
 
 .card {
-  padding: 2em;
+	@apply rounded-lg;
+	background-color: #f3f3f3;
 }
 
-.read-the-docs {
-  color: #888;
+@layer utilities {
+	.required-label::after {
+		content: '*';
+		color: red;
+		margin-left: 3px;
+	}
 }
