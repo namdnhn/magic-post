@@ -5,22 +5,22 @@
 </script>
 
 <header>
-	<AppBar class="w-full p-3 pl-6 h-16 justify-center !bg-tertiary-300">
+	<AppBar class="w-full p-3 pl-6 h-16 justify-center !bg-tertiary-200">
 		<svelte:fragment slot="lead" />
 		<TabAnchor href="/">
 			<span class="brand">
-				<img src="/" alt="logo" class="h-16 overflow-hidden" />
+				<img src="/img/logo-new.png" alt="logo" class="h-16 overflow-hidden" />
 			</span>
 		</TabAnchor>
 		<svelte:fragment slot="trail">
 			<TabGroup
 				justify="justify-end"
 				active="variant-filled-primary"
-				hover="hover:variant-soft-primary"
+				hover="hover:variant-ghost-secondary"
 				flex="flex-1 lg:flex-none"
-				rounded="rounded-md"
-				border=""
-				class="!bg-transparent w-full"
+				rounded="rounded-full"
+				border="border-inherit"
+				class="w-full"
 			>
 				<TabAnchor href="/" class="ml-3">
 					<span class="link-nav flex"> Dịch vụ &nbsp;<Truck /> </span>
