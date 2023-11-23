@@ -99,20 +99,6 @@
 		padding: 9rem 0 0 1.5rem;
 	}
 
-	.bg-color {
-		position: relative;
-		top: 0;
-		left: 0;
-		height: 100%;
-		max-height: 60rem;
-		width: 100%;
-		border-radius: 12px 0 0 12px;
-		background-image: url(/img/bg-color.svg);
-		background-repeat: no-repeat;
-		background-attachment: local;
-		background-position: center;
-		background-size: cover;
-	}
 
 	.bg-pic {
 		position: absolute;
