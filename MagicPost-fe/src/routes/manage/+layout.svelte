@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { AppRail, AppRailTile, AppRailAnchor, TreeView, TreeViewItem } from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
-	import { AlignJustify, Users, Package, Boxes, Dot, ScrollText, Navigation } from 'lucide-svelte';
+	import { AlignJustify,MenuSquare, Users, Package, Boxes, Dot, ScrollText, Navigation } from 'lucide-svelte';
 
 	let expand: boolean = true;
 	let isOpenTransport = ['/manage/delivery', '/manage/transport'].includes($page.url.pathname);
@@ -74,10 +74,5 @@
 </div>
 
 <style>
-	.wrapper {
-		width: 100%;
-		height: calc(100vh - 4rem);
-		display: flex;
-		flex: 1;
-	}
+
 </style>
