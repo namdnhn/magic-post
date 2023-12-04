@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
 	import { Roles } from 'src/utils/interface';
-
 	export let id: string;
-
 	let fullName: string,
 		email: string,
 		address: string,
@@ -22,22 +20,18 @@
 			role
 		};
 		console.log('🚀 ~ file: StaffsModal.svelte:24 ~ body:', body);
-
 		Object.values(body).some(async (value) => {
 			if (!value) {
 				error = 'Có dữ liệu bắt buộc bị để trống!';
 				return;
 			}
-
 			loading = true;
 			const response = await fetch('/api/admin/staffs', {
 				method: 'POST',
 				body: JSON.stringify(body)
 			});
-
 			const staffData = await response.json();
 			console.log('🚀 ~ file: StaffsModal.svelte:21 ~ response:', staffData);
-
 			if (staffData.status == 201) {
 				(document.getElementById('admin_new_staff') as any).close();
 				invalidate('/api/admin/staffs');
@@ -125,7 +119,7 @@
 						type="radio"
 						on:change={() => (role = Roles.TRANSACTION_LEADER)}
 						name="role-radio"
-						class="dui-radio dui-radio-sm checked:bg-secondary-500"
+						class="dui-radio dui-radio-sm checked:bg-primary-500"
 						checked
 					/>
 					<span class="dui-label-text ml-2">Trưởng điểm giao dịch</span>
@@ -135,7 +129,7 @@
 						type="radio"
 						on:change={() => (role = Roles.GATHERING_LEADER)}
 						name="role-radio"
-						class="dui-radio dui-radio-sm checked:bg-secondary-500"
+						class="dui-radio dui-radio-sm checked:bg-primary-500"
 					/>
 					<span class="dui-label-text ml-2">Trưởng điểm tập kết</span>
 				</label>
@@ -147,7 +141,7 @@
 		{/if}
 		<div class="flex justify-end gap-3 mt-[6px]">
 			<form method="dialog">
-				<button class="btn variant-outline-tertiary hover:text-secondary-500 hover:variant-outline-error">
+				<button class="btn variant-outline-tertiary hover:text-primary-500 hover:variant-outline-error">
 					Hủy bỏ
 				</button>
 			</form>

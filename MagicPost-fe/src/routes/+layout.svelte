@@ -1,7 +1,15 @@
 <script lang="ts">
 	import '../app.css';
 	import { TabGroup, AppBar, TabAnchor } from '@skeletonlabs/skeleton';
-	import { Newspaper, Truck, User2, MapPin } from 'lucide-svelte';
+	import { Newspaper, Truck, User2, MapPin, FileText, LogOut, UserCircle } from 'lucide-svelte';
+	import type { PageData } from './$types';
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+	import { Roles } from 'src/utils/interface';
+	import { storePopup } from '@skeletonlabs/skeleton';
+	import { initLazy } from '$lib/lazyLoad';
+
+	initLazy();
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 </script>
 
 <header>

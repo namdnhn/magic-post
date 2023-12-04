@@ -8,6 +8,11 @@ export enum Roles {
 	SHIPPER = 7
 }
 
+export enum OfficeType {
+	GATHERING = 'GP',
+	TRANSACTION = 'TP'
+}
+
 export enum LocationDepth {
 	PROVINCE = 1,
 	DISTRICT = 2,
@@ -19,26 +24,44 @@ export interface LocationSchema {
 	code: number;
 }
 
-export interface StaffTableInteface {
+export interface StaffsInteface {
 	id: string;
+	userId: string;
+	address: string;
+	email: string;
 	fullName: string;
+	phoneNo: string;
+	dateOfBirth: string;
 	role: {
-		id: string;
+		id: Roles;
 		name: string;
 	};
-	workAt: string;
+	workAt: {
+		id: string;
+		pointId: string;
+		name: string;
+	};
 }
 
-export interface OfficeTableInterface {
+export interface OfficesInterface {
 	id: string;
+	pointId: string;
 	name: string;
-	phone: string;
+	phoneNo: string;
 	address: string;
-	manager: string;
-	gatheringPoint?: string;
+	admin: {
+		fullName: string;
+		userId: string;
+	};
+	gatheringPoint?: {
+		id: string;
+		pointId: string;
+		name: string;
+	};
+	type: string;
 }
 
-export interface TableTransactionOrderInteface {
+export interface TransactionOrderInteface {
 	orderId: string;
 	address: string;
 	transactionId: string;

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { PencilLine, Trash2 } from 'lucide-svelte';
-	import type { StaffTableInteface } from 'src/utils/interface';
-
-	export let tableData: StaffTableInteface[] = [];
+	import type { StaffsInteface } from 'src/utils/interface';
+	export let tableData: StaffsInteface[] = [];
 </script>
 
 <div class="table-container !rounded-b-none !rounded-md h-full">
