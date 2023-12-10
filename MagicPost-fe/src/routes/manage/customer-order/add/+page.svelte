@@ -66,7 +66,7 @@
 			<label class="dui-label pb-1" for="name">
 				<span class="dui-label-text">Khối lượng thực tế (kg)</span>
 			</label>
-			<input type="text" name="name" placeholder="Nhập khối lượng" class="dui-input h-10 dui-input-bordered w-full" />
+			<input type="text" name="num" placeholder="Nhập khối lượng" class="dui-input h-10 dui-input-bordered w-full" />
 		</div>
 
 		{#if packageType == 'package'}
