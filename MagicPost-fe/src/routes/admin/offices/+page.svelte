@@ -60,7 +60,13 @@
 		</div>
 	</div>
 	<div class="card !rounded-b-none h-[calc(100%-7.5rem)]">
-		
+		{#await data.offices.promise}
+			<Loading message="Đang lấy dữ liệu mới nhất" />
+		{:then offices}
+			<OfficesTable tableData={offices.data.content} {officeType} />
+		{:catch err}
+			<p>Error</p>
+		{/await}
 	</div>
 </main>
 
