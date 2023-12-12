@@ -20,7 +20,7 @@
 				<button class="btn variant-outline-tertiary hover:text-primary-500 hover:variant-outline-error"> Hủy </button>
 			</form>
 			<button
-				class="btn variant-filled bg-primary-600"
+				class="btn variant-filled bg-secondary-600"
 				on:click={() => {
 					loading = true;
 					confirmAction();
