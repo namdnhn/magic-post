@@ -22,34 +22,7 @@
 				<a class="tracking-link-image" >Xem hình ảnh giao hàng</a>
 			</div>
 		</div>
-		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
-		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+
 	</li>
 
 	<!-- Đang giao hàng -->
@@ -58,7 +31,7 @@
 		<div class="flex">
 			<div class="flex">
 				<div class="flex flex-col items-center">
-					<div class="tracking-icon">
+					<div class="tracking-icon ">
 						<Truck class="w-5 h-5" />
 					</div>
 					<div class="tracking-hr grow" />
@@ -71,33 +44,9 @@
 			</div>
 		</div>
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 	</li>
 
 	<!-- Đã đến Việt Nam -->
@@ -119,33 +68,9 @@
 			</div>
 		</div>
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 	</li>
 
 	<!-- Vận chuyển đến Việt Nam -->
@@ -167,33 +92,9 @@
 			</div>
 		</div>
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 	</li>
 
 	<!-- Đang xử lý đơn hàng nước ngoài -->
@@ -215,33 +116,9 @@
 			</div>
 		</div>
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 	</li>
 
 	<!-- Đang được chuẩn bị -->
@@ -263,33 +140,9 @@
 			</div>
 		</div>
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 		<!-- Dòng phụ (chấm tròn) -->
-		<div class="flex">
-			<div class="flex">
-				<div class="flex flex-col items-center min-w-[2rem]">
-					<div class="tracking-hr grow" />
-					<div class="tracking-dot rounded-full w-3 h-3" />
-					<div class="tracking-hr grow" />
-				</div>
-				<div class="mx-5">15:20 30-05-2023</div>
-			</div>
-			<div>
-				<div class="tracking-text-pending">Đơn hàng đã được giao thành công</div>
-			</div>
-		</div>
+		
 	</li>
 
 	<!-- Đặt hàng thành công -->
