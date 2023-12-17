@@ -53,19 +53,21 @@
 						<td>{row.role.name}</td>
 						<td>{row.workAt ? row.workAt.name : 'Chưa có'}</td>
 						<td class="flex items-center gap-3">
-							<div class="dui-tooltip dui-tooltip-bottom" data-tip="Chỉnh sửa">
+							<div class="dui-tooltip dui-tooltip-bottom " data-tip="Chỉnh sửa">
 								<button
 									type="button"
-									class="btn-icon variant-filled h-8 w-8"
+									class="btn-icon variant-filled-secondary h-8 w-8"
 									on:click={() => openEditStaffModal('edit-staff-' + row.userId)}
 								>
 									<PencilLine size="16" />
 								</button>
 								<StaffsModal id={'edit-staff-' + row.userId} staff={row} />
 							</div>
-							<button
+
+							<div class="dui-tooltip dui-tooltip-bottom " data-tip="Xóa">
+								<button
 								type="button"
-								class="btn-icon variant-filled h-8 w-8"
+								class="btn-icon variant-filled-error h-8 w-8"
 								on:click={() => {
 									openDeleteStaffModal('delete-staff-' + row.userId);
 								}}
@@ -74,9 +76,11 @@
 							</button>
 							<DeleteConfirmModal
 								id={'delete-staff-' + row.userId}
-								message={`Xóa trưởng điểm <b>${row.fullName}</b>?`}
+								message={`Xóa <b>${row.fullName}</b>?`}
 								confirmAction={() => deleteStaff(row.id)}
 							/>
+							</div>
+							
 						</td>
 					</tr>
 				{/each}
@@ -100,7 +104,4 @@
 		vertical-align: middle;
 	}
 
-	.btn-icon {
-		background-color: #4784af;
-	}
 </style>
