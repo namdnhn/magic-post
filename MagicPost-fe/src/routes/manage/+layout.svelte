@@ -10,32 +10,32 @@
 </script>
 
 <div class="wrapper"> 
-	<AppRail width="w-56"  aspectRatio="aspect-[4/1]" class="shadow-lg">
-		<AppRailTile bind:group={expand} name="tile-1" active="" value={0} hover="hover:bg-secondary-500">
-			<span class="flex justify-center text-base gap-3">
-				<AlignJustify /> Menu quản lý
+	<AppRail width={expand ? 'w-56' : 'w-20'}  aspectRatio="aspect-[4/1]" class="shadow-lg">
+		<AppRailTile on:click={() => (expand = !expand)} bind:group={expand} name="tile-1" active="" value={0} hover="hover:bg-secondary-500">
+			<span class="flex pl-7 text-base gap-3" class:py-4={!expand} class:py-8={expand}>
+				<AlignJustify /> <span class:hidden={!expand}>Menu quản lý</span>
 			</span>
 		</AppRailTile>
 
 		<!-- --- -->
 		<AppRailAnchor href="/manage/staffs" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={$page.url.pathname === '/manage/staffs'}>
-			<span class="pl-5 text-base flex gap-3">
-				<Users /> Nhân viên
+			<span class="pl-7 text-base flex gap-3" class:py-4={!expand}>
+				<Users /> <span class:hidden={!expand}>Nhân viên</span>
 			</span>
 		</AppRailAnchor>
 		<AppRailAnchor href="/manage/customer-order" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={isOpenCustomerOrder}>
-			<span class="pl-5 text-base flex gap-3">
-				<Package />Đơn đặt hàng
+			<span class="pl-7 text-base flex gap-3" class:py-4={!expand}>
+				<Package /> <span class:hidden={!expand}>Đơn đặt hàng</span>
 			</span>
 		</AppRailAnchor>
 		<AppRailAnchor href="/manage/transaction-order" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={$page.url.pathname === '/manage/transaction-order'}>
-			<span class="pl-5 text-base flex gap-3">
-				<ScrollText />Đơn giao dịch
+			<span class="pl-7 text-base flex gap-3" class:py-4={!expand}>
+				<ScrollText /> <span class:hidden={!expand}>Đơn giao dịch</span>
 			</span>
 		</AppRailAnchor>
 		<AppRailAnchor href="/manage/gathering-order" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={$page.url.pathname === '/manage/gathering-order'}>
-			<span class="pl-5 text-base flex gap-3">
-				<Boxes />Đơn tập kết
+			<span class="pl-7 text-base flex gap-3" class:py-4={!expand}>
+				<Boxes /><span class:hidden={!expand}>Đơn tập kết</span>
 			</span>
 		</AppRailAnchor>
 		<TreeView
