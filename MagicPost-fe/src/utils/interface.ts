@@ -43,6 +43,11 @@ export interface StaffsInteface {
 	};
 }
 
+export interface GatherOrderInteface {
+	orderId: string;
+	address: string;
+}
+
 export interface OfficesInterface {
 	id: string;
 	pointId: string;
