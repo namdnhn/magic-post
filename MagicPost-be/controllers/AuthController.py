@@ -98,6 +98,12 @@ class AuthController:
         return db.query(UserModel).filter(UserModel.id == userId).first()
 
     def createUser(user: RegisterUser, db: Session = Depends(getDatabase)):
+        is_user_exist = db.query(UserModel).filter(UserModel.email == user.email).first()
+        if is_user_exist:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"User with email {user.email} already exists",
+            )
         db_user = UserModel(
             email=user.email,
             password=bcrypt(user.password),
