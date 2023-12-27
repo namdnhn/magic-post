@@ -1,4 +1,3 @@
-from fastapi import APIRouter, HTTPException, Depends
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database import getDatabase
@@ -12,7 +11,9 @@ from schemas.manageSchema import (
     GatheringStaff,
     TransactionPoint,
     TransactionLeader,
-    TransactionStaff
+    TransactionStaff,
+    Staff,
+    Offices,
 )
 from schemas.userSchema import RegisterUser
 from typing import List
@@ -23,19 +24,23 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.get("/gathering_points/", response_model=List[GatheringPoint])
+@router.get("/gathering_points/")
 async def get_all_gathering_points(db: Session = Depends(getDatabase)):
     return ManageController.getAllGatheringPoints(db)
 
-@router.get("/gathering_leaders/", response_model=List[GatheringLeader])
+@router.get("/gathering_point_by_transaction_point/{transaction_point_id}", response_model=GatheringPoint)
+async def get_gathering_point_by_transaction_point(transaction_point_id: int, db: Session = Depends(getDatabase)):
+    return ManageController.getGatheringPointByTransactionPoint(transaction_point_id, db)
+
+@router.get("/gathering_leaders/", response_model=List[Staff])
 async def get_all_gathering_leaders(db: Session = Depends(getDatabase)):
     return ManageController.getAllGatheringLeaders(db)
 
-@router.get("/gathering_staffs/", response_model=List[GatheringStaff])
+@router.get("/gathering_staffs/", response_model=List[Staff])
 async def get_all_gathering_staffs(db: Session = Depends(getDatabase)):
     return ManageController.getAllGatheringStaffs(db)
 
-@router.get("/transaction_points/", response_model=List[TransactionPoint])
+@router.get("/transaction_points/", response_model=List[Offices])
 async def get_all_transaction_points(db: Session = Depends(getDatabase)):
     return ManageController.getAllTransactionPoints(db)
 
@@ -43,11 +48,11 @@ async def get_all_transaction_points(db: Session = Depends(getDatabase)):
 async def get_all_transaction_points_by_destination(destination: Destination, db: Session = Depends(getDatabase)):
     return ManageController.getAllTransactionPointsByDestination(destination, db)
 
-@router.get("/transaction_leaders/", response_model=List[TransactionLeader])
+@router.get("/transaction_leaders/", response_model=List[Staff])
 async def get_all_transaction_leaders(db: Session = Depends(getDatabase)):
     return ManageController.getAllTransactionLeaders(db)
 
-@router.get("/transaction_staffs/", response_model=List[TransactionStaff])
+@router.get("/transaction_staffs/", response_model=List[Staff])
 async def get_all_transaction_staffs(db: Session = Depends(getDatabase)):
     return ManageController.getAllTransactionStaffs(db)
 
@@ -74,4 +79,21 @@ async def create_transaction_leader(register_user: RegisterUser, transaction_poi
 @router.post("/transaction_staff/{transaction_point_id}")
 async def create_transaction_staff(register_user: RegisterUser, transaction_point_id: int, db: Session = Depends(getDatabase)):
     return ManageController.createTransactionStaff(register_user, transaction_point_id, db)
+
+@router.delete("gathering_leader/{gathering_leader_id}")
+async def delete_gathering_leader(gathering_leader_id: int, db: Session = Depends(getDatabase)):
+    return ManageController.deleteGatheringLeader(gathering_leader_id, db)
+
+@router.delete("gathering_staff/{gathering_staff_id}")
+async def delete_gathering_staff(gathering_staff_id: int, db: Session = Depends(getDatabase)):
+    return ManageController.deleteGatheringStaff(gathering_staff_id, db)
+
+@router.delete("transaction_leader/{transaction_leader_id}")
+async def delete_transaction_leader(transaction_leader_id: int, db: Session = Depends(getDatabase)):
+    return ManageController.deleteTransactionLeader(transaction_leader_id, db)
+
+@router.delete("transaction_staff/{transaction_staff_id}")
+async def delete_transaction_staff(transaction_staff_id: int, db: Session = Depends(getDatabase)):
+    return ManageController.deleteTransactionStaff(transaction_staff_id, db)
+
 

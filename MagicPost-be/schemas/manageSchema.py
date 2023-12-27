@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
+from schemas.packageSchema import Package
 
 class AdminBase(BaseModel):
     user_id: int
@@ -20,11 +21,6 @@ class GatheringPointBase(BaseModel):
 class GatheringPointCreate(GatheringPointBase):
     pass
 
-class GatheringPoint(GatheringPointBase):
-    id: int
-
-    class Config:
-        orm_mode = True
 
 
 class TransactionPointBase(BaseModel):
@@ -41,6 +37,8 @@ class TransactionPointCreate(TransactionPointBase):
 
 class TransactionPoint(TransactionPointBase):
     id: int
+    
+    packages: Optional[List[Package]] = None
 
     class Config:
         orm_mode = True
@@ -119,3 +117,42 @@ class Destination(BaseModel):
     province_code: str
     district_code: str
     ward_code: str
+
+class Roles(BaseModel):
+    id: str
+    name: str
+
+class WorkAt(BaseModel):
+    id: str
+    pointId: str
+    name: str
+
+class Staff(BaseModel):
+    id: str
+    userId: str
+    address: str
+    email: str
+    fullName: str
+    phoneNo: str
+    dateOfBirth: str
+    role: Roles
+    workAt: WorkAt
+
+class GatheringPoint(BaseModel):
+    id: str
+    pointId: str
+    name: str
+    
+class Leader(BaseModel):
+    userId: str
+    fullName: str
+    
+class Offices(BaseModel):
+    id: str
+    pointId: str
+    name: str
+    phoneNo: Optional[str] = None
+    address: Optional[str] = None
+    leader: Leader
+    gatheringPoint: Optional[GatheringPoint] = None
+    type: str

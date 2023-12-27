@@ -45,6 +45,10 @@ def get_user_by_id(userId: int, db: Session = Depends(getDatabase)):
 def get_user_by_email(email: str, db: Session = Depends(getDatabase)):
     return AuthController.getUserByEmail(email, db)
 
+@router.get("/check_login")
+def is_logged_in():
+    return AuthController.isLoggedIn()
+
 @router.put("/users/update/{userId}")
 def update_user(userId: int, request: UpdateUser, db: Session = Depends(getDatabase)):
     return AuthController.updateUser(userId, request, db)

@@ -5,6 +5,8 @@
 	import Loading from 'src/components/Loading.svelte';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	import axiosInstance from 'src/axios';
+	import { onMount } from 'svelte';
 
 	export let data: PageData | any;
 	let officeType: 'giao dịch' | 'tập kết' | 'toàn bộ' = 'toàn bộ';
@@ -24,6 +26,12 @@
 			goto('/admin/offices');
 		}
 	}
+
+	// onMount(async () => {
+	// 	const response = await axiosInstance.get('/manage/gathering_points/');
+	// 	console.log(response.data);
+	// 	data.offices.set(response.data);
+	// });
 </script>
 
 <main class="h-full">
@@ -33,8 +41,7 @@
 			<PlusCircle class="mr-1" size="20" /> Thêm mới
 		</button>
 
-				<OfficeModal id="new_office_modal" />
-
+		<OfficeModal id="new_office_modal" />
 	</div>
 	<div class="card p-4 mb-3 grid grid-cols-3 gap-10 !bg-[#fff]">
 		<div class="flex items-center">

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import Base, engine
-from routers import authRouters, administrativeRouters, manageRouters
+from routers import authRouters, administrativeRouters, manageRouters, packageRouter
 
 from fastapi import Depends
 from controllers.AuthController import reusable_oauth2, isTokenInvalidated
@@ -12,6 +12,7 @@ app = FastAPI()
 app.include_router(authRouters.router)
 app.include_router(administrativeRouters.router)
 app.include_router(manageRouters.router)
+app.include_router(packageRouter.router)
 
 app.add_middleware(
     CORSMiddleware,

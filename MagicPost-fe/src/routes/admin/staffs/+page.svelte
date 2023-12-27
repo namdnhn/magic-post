@@ -3,20 +3,24 @@
 	import StaffsTable from 'src/components/table/StaffsTable.svelte';
 	import StaffsModel from 'src/components/modal/StaffsModal.svelte';
 	import type { StaffsInteface } from 'src/utils/interface';
-	let staffs: StaffsInteface[] = [
-		{
-			id: '1',
-			fullName: 'Minh Khoi',
-			role: { id: '1', name: 'okela'
-            },
-			workAt: '144 Xuân Thủy'
-		}
-	];
+	import { onMount } from 'svelte';
+	import axiosInstance from 'src/axios';
+
+	let staffs: StaffsInteface[] = [];
 	function createStaff() {
 		(document.getElementById('admin_new_staff') as any).showModal();
 	}
-	staffs = new Array(5).fill(staffs).flat();
+
+	onMount(async() => {
+		const res1 = await axiosInstance.get('/manage/gathering_leaders');
+		console.log(res1.data);
+		staffs = res1.data;
+		const res2 = await axiosInstance.get('/manage/transaction_leaders');
+		console.log(res2.data);
+		staffs = staffs.concat(res2.data)
+	})
 </script>
+
 <main class="h-full">
 	<div class="flex justify-between items-center mb-3">
 		<h1 class="h3 uppercase">Danh sách tài khoản trưởng điểm</h1>

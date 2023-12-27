@@ -3,7 +3,7 @@
 	import { linear } from 'svelte/easing';
 	import { goto } from '$app/navigation';
 
-	let inputRegisterValue = ['', '', '', ''];
+	let inputRegisterValue = ['', '', '', '', '', '', ''];
 	let isRegisterInputValid = [true, true, true, true];
 
 	let showPassword = false;
@@ -11,10 +11,13 @@
 	let error_messages = '';
 
 	let invalidRegisterMessages = [
-		'You need to enter your full name.',
-		'You need to enter your username.',
-		'You need to enter your password.',
-		'You need to re-enter your password.'
+		'Vui lòng nhập tên đầy đủ.',
+		'Vui lòng nhập tài khoản email.',
+		'Vui lòng nhập mật khẩu.',
+		'Vui lòng nhập lại mật khẩu.',
+		'Vui lòng nhập ngày tháng năm sinh',
+		'Vui lòng nhập số điện thoại.',
+		'Vui lòng nhập địa chỉ',
 	];
 
 	// @ts-ignore
@@ -26,40 +29,46 @@
 
 	let inputArrays = [
 		{ attrs: { type: 'text' }, placeholder: 'Full Name' },
-		{ attrs: { type: 'text' }, placeholder: 'Username' },
+		{ attrs: { type: 'text' }, placeholder: 'Email' },
 		{ attrs: { type: 'password' }, placeholder: 'Password' },
-		{ attrs: { type: 'password' }, placeholder: 'Re-enter Password' }
+		{ attrs: { type: 'password' }, placeholder: 'Re-enter Password' },
+		{ attrs: { type: 'date' }, placeholder: 'Date of Birth' },
+		{ attrs: { type: 'text' }, placeholder: 'Phone Number' },
+		{ attrs: { type: 'text' }, placeholder: 'Address' }
 	];
 
 	async function handleSignUp() {
-        let check = isRegisterInputValid.every((value) => value === true) && inputRegisterValue.every((value) => value != '');
+		let check =
+			isRegisterInputValid.every((value) => value === true) && inputRegisterValue.every((value) => value != '');
 		if (check) {
-            let formData = new FormData();
-            formData.append('fullname', inputRegisterValue[0]);
-            formData.append('username', inputRegisterValue[1]);
-            formData.append('password', inputRegisterValue[2]);
-            formData.append('re_password', inputRegisterValue[3]);
-            const response = await fetch('https://laweng-be.vercel.app/api/signup', {
-                method: 'POST',
-                body: formData
-            });
-            if (response.status === 200) {
-                toggleMode();
-            } else {
-                const data = await response.json();
-                error_messages = data.message;
-            }
-        } else {
-            for(let i = 0; i < inputRegisterValue.length; i++) {
-                checkRegisterInput(i)
-            }
-        }
-
+			let formData = new FormData();
+			formData.append('fullname', inputRegisterValue[0]);
+			formData.append('email', inputRegisterValue[1]);
+			formData.append('password', inputRegisterValue[2]);
+			formData.append('re_password', inputRegisterValue[3]);
+			formData.append('date_of_birth', inputRegisterValue[4]);
+			formData.append('phone_number', inputRegisterValue[5]);
+			formData.append('address', inputRegisterValue[6]);
+			const response = await fetch('https://laweng-be.vercel.app/api/signup', {
+				method: 'POST',
+				body: formData
+			});
+			if (response.status === 200) {
+				toggleMode();
+			} else {
+				const data = await response.json();
+				error_messages = data.message;
+			}
+		} else {
+			for (let i = 0; i < inputRegisterValue.length; i++) {
+				checkRegisterInput(i);
+			}
+		}
 	}
 </script>
 
 <div
-	class="top-2/4 md:top-1/3 lg:top-2/4 2xl:top-1/3 absolute w-full xl:w-4/12 lg:w-6/12 px-4 mx-auto pt-6"
+	class="top-2/4 mt-14 md:top-1/3 lg:top-2/4 2xl:top-1/3 absolute w-full xl:w-4/12 lg:w-6/12 px-4 mx-auto pt-6"
 	style="
 left: 50%;
 transform: translate(-50%, -50%);
@@ -146,7 +155,7 @@ transform: translate(-50%, -50%);
 					<button
 						class="login bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
 						type="button"
-                        on:click={handleSignUp}
+						on:click={handleSignUp}
 					>
 						Sign Up
 					</button>

@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from models.manage import (
@@ -17,6 +18,11 @@ from schemas.manageSchema import (
     TransactionPointCreate,
     GatheringPointCreate,
     Destination,
+    Staff,
+    Roles,
+    WorkAt,
+    Offices,
+    Leader
 )
 from schemas.userSchema import RegisterUser
 from controllers.AuthController import AuthController
@@ -24,16 +30,125 @@ from controllers.AuthController import AuthController
 
 class ManageController:
     def getAllGatheringPoints(db: Session):
-        return db.query(GatheringPointModel).all()
+        offices: List[Offices] = []
+        gathering_points = db.query(GatheringPointModel).all()
+        
+        for point in gathering_points:
+            leader = point.gathering_leader[0]
+            fullname = AuthController.getFullnameByUserId(leader.user_id, db)
+            new_office = Offices(
+                id=str(point.id),
+                pointId=str(point.id),
+                name=point.name,
+                phoneNo=point.phone,
+                address=point.address,
+                leader=Leader(
+                    userId=str(leader.user_id),
+                    fullName=fullname,
+                ),
+                type="Điểm tập kết",
+            )
+            offices.append(new_office)
+            
+        return offices
+
+    def getGatheringPointByTransactionPoint(transaction_point_id: int, db: Session):
+        transaction_point = (
+            db.query(TransactionPointModel)
+            .filter(TransactionPointModel.id == transaction_point_id)
+            .first()
+        )
+        if not transaction_point:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Transaction point not found",
+            )
+        gathering_point = (
+            db.query(GatheringPointModel)
+            .filter(GatheringPointModel.id == transaction_point.gathering_point_id)
+            .first()
+        )
+        if not gathering_point:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Gathering point not found",
+            )
+        return gathering_point
 
     def getAllGatheringLeaders(db: Session):
-        return db.query(GatheringLeaderModel).all()
+        leaders: List[Staff] = []
+        gathering_leaders = db.query(GatheringLeaderModel).all()
+        
+        for leader in gathering_leaders:
+            user = leader.user
+            user_detail = leader.user.user_detail[0]
+            gathering_point = leader.gathering_point
+            new_leader = Staff(
+                id=str(leader.id),
+                userId=str(leader.user_id),
+                address=user_detail.address,
+                email=user.email,
+                fullName=user_detail.fullname,
+                phoneNo=user_detail.phone,
+                dateOfBirth=str(user_detail.date_of_birth),
+                role=Roles(id=user.role, name=user.role),
+                workAt=WorkAt(
+                    id=str(leader.gathering_point_id),
+                    pointId=str(leader.gathering_point_id),
+                    name=gathering_point.name,
+                ),
+            )
+            leaders.append(new_leader)
+        return leaders
 
     def getAllGatheringStaffs(db: Session):
-        return db.query(GatheringStaffModel).all()
+        staffs: List[Staff] = []
+        gathering_staffs = db.query(GatheringStaffModel).all()
+
+        for staff in gathering_staffs:
+            user = staff.user
+            user_detail = staff.user.user_detail[0]
+            gathering_point = staff.gathering_point
+            new_staff = Staff(
+                id=str(staff.id),
+                userId=str(staff.user_id),
+                address=user_detail.address,
+                email=user.email,
+                fullName=user_detail.fullname,
+                phoneNo=user_detail.phone,
+                dateOfBirth=str(user_detail.date_of_birth),
+                role=Roles(id=user.role, name=user.role),
+                workAt=WorkAt(
+                    id=str(staff.gathering_point_id),
+                    pointId=str(staff.gathering_point_id),
+                    name=gathering_point.name,
+                ),
+            )
+            staffs.append(new_staff)
+        return staffs
 
     def getAllTransactionPoints(db: Session):
-        return db.query(TransactionPointModel).all()
+        offices : List[Offices] = []
+        transaction_points = db.query(TransactionPointModel).all()
+        
+        for point in transaction_points:
+            leader = point.transaction_leader[0]
+            fullname = AuthController.getFullnameByUserId(leader.user_id, db)
+            new_office = Offices(
+                id=str(point.id),
+                pointId=str(point.id),
+                name=point.name,
+                phoneNo=point.phone,
+                address=point.address,
+                leader=Leader(
+                    userId=str(leader.user_id),
+                    fullName=fullname,
+                ),
+                type="Điểm giao dịch",
+            )
+            offices.append(new_office)
+            
+        return offices
 
     def getAllTransactionPointsByDestination(destination: Destination, db: Session):
         is_transaction_point_exist_by_ward = (
@@ -75,15 +190,64 @@ class ManageController:
             db.query(TransactionPointModel)
             .filter(
                 TransactionPointModel.province_code == destination.province_code,
+                TransactionPointModel.district_code == destination.district_code,
+                TransactionPointModel.ward_code == destination.ward_code,
             )
             .all()
         )
 
     def getAllTransactionLeaders(db: Session):
-        return db.query(TransactionLeaderModel).all()
+        leaders : List[Staff] = []
+        transaction_leaders = db.query(TransactionLeaderModel).all()
+        
+        for leader in transaction_leaders:
+            user = leader.user
+            user_detail = leader.user.user_detail[0]
+            transaction_point = leader.transaction_point
+            new_leader = Staff(
+                id=str(leader.id),
+                userId=str(leader.user_id),
+                address=user_detail.address,
+                email=user.email,
+                fullName=user_detail.fullname,
+                phoneNo=user_detail.phone,
+                dateOfBirth=str(user_detail.date_of_birth),
+                role=Roles(id=user.role, name=user.role),
+                workAt=WorkAt(
+                    id=str(leader.transaction_point_id),
+                    pointId=str(leader.transaction_point_id),
+                    name=transaction_point.name,
+                ),
+            )
+            leaders.append(new_leader)
+            
+        return leaders
 
     def getAllTransactionStaffs(db: Session):
-        return db.query(TransactionStaffModel).all()
+        staffs: List[Staff] = []
+        transaction_staffs = db.query(TransactionStaffModel).all()
+
+        for staff in transaction_staffs:
+            user = staff.user
+            user_detail = staff.user.user_detail[0]
+            transaction_point = staff.transaction_point
+            new_staff = Staff(
+                id=str(staff.id),
+                userId=str(staff.user_id),
+                address=user_detail.address,
+                email=user.email,
+                fullName=user_detail.fullname,
+                phoneNo=user_detail.phone,
+                dateOfBirth=str(user_detail.date_of_birth),
+                role=Roles(id=user.role, name=user.role),
+                workAt=WorkAt(
+                    id=str(staff.transaction_point_id),
+                    pointId=str(staff.transaction_point_id),
+                    name=transaction_point.name,
+                ),
+            )
+            staffs.append(new_staff)
+        return staffs
 
     def createGatheringPoint(gathering_point: GatheringPointCreate, db: Session):
         new_gathering_point = GatheringPointModel(name=gathering_point.name)
@@ -182,3 +346,63 @@ class ManageController:
         db.commit()
         db.refresh(new_transaction_staff)
         return {"user": new_user, "user_detail": new_transaction_staff}
+
+    def deleteGatheringLeader(gathering_leader_id: int, db: Session):
+        gathering_leader = (
+            db.query(GatheringLeaderModel)
+            .filter(GatheringLeaderModel.id == gathering_leader_id)
+            .first()
+        )
+        if not gathering_leader:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Gathering leader not found",
+            )
+        db.delete(gathering_leader)
+        db.commit()
+        return gathering_leader
+
+    def deleteTransactionLeader(transaction_leader_id: int, db: Session):
+        transaction_leader = (
+            db.query(TransactionLeaderModel)
+            .filter(TransactionLeaderModel.id == transaction_leader_id)
+            .first()
+        )
+        if not transaction_leader:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Transaction leader not found",
+            )
+        db.delete(transaction_leader)
+        db.commit()
+        return transaction_leader
+
+    def deleteGatheringStaff(gathering_staff_id: int, db: Session):
+        gathering_staff = (
+            db.query(GatheringStaffModel)
+            .filter(GatheringStaffModel.id == gathering_staff_id)
+            .first()
+        )
+        if not gathering_staff:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Gathering staff not found",
+            )
+        db.delete(gathering_staff)
+        db.commit()
+        return gathering_staff
+
+    def deleteTransactionStaff(transaction_staff_id: int, db: Session):
+        transaction_staff = (
+            db.query(TransactionStaffModel)
+            .filter(TransactionStaffModel.id == transaction_staff_id)
+            .first()
+        )
+        if not transaction_staff:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Transaction staff not found",
+            )
+        db.delete(transaction_staff)
+        db.commit()
+        return transaction_staff

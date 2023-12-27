@@ -56,7 +56,7 @@
 						<td>{row.pointId}</td>
 						<td>{row.name}</td>
 						<td>{row.phoneNo}</td>
-						<td>{row.admin ? row.admin.fullName : 'Không có'}</td>
+						<td>{row.leader ? row.leader.fullName : 'Không có'}</td>
 						<td>{row.address}</td>
 						{#if officeType == 'giao dịch'}
 							<td>{row.gatheringPoint?.name}</td>

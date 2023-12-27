@@ -29,7 +29,7 @@ class RegisterUser(BaseModel):
     gender: Gender = Gender.OTHER
     role: Roles = Roles.CUSTOMER
     phone: str
-    image_path: str
+    image_path: str = ""
     address: str
 
     class Config:

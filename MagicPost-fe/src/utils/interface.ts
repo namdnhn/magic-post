@@ -1,11 +1,11 @@
 export enum Roles {
-	ADMIN = 1,
-	TRANSACTION_LEADER = 2,
-	TRANSACTION_STAFF = 3,
-	GATHERING_LEADER = 4,
-	GATHERS_STAFF = 5,
-	CUSTOMER = 6,
-	SHIPPER = 7
+	ADMIN = "admin",
+    TRANSACTION_LEADER = "transaction_leader",
+    TRANSACTION_STAFF = "transaction_staff",
+    GATHERING_LEADER = "gathering_leader",
+    GATHERS_STAFF = "gathering_staff",
+    CUSTOMER = "customer",
+    SHIPPER = "shipper"
 }
 
 export enum OfficeType {
@@ -54,7 +54,7 @@ export interface OfficesInterface {
 	name: string;
 	phoneNo: string;
 	address: string;
-	admin: {
+	leader: {
 		fullName: string;
 		userId: string;
 	};

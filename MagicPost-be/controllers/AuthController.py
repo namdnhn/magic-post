@@ -51,21 +51,21 @@ def verifyToken(db: Session = Depends(getDatabase), data=Depends(reusable_oauth2
         payload = jwt.decode(
             data.credentials, os.getenv("SECRET_KEY"), algorithms=os.getenv("ALGORITHM")
         )
-        email: str = payload.get("sub")
-        if email is None:
+        user_id: str = payload.get("userId")
+        if user_id is None:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Could not validate email",
+                detail="Could not validate user",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        token_data = email
+        token_data = user_id
     except PyJWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    user = AuthController.getUserByEmail(email=token_data, db=db)
+    user = db.query(UserModel).filter(UserModel.id == token_data).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -88,6 +88,14 @@ def verify(hashed_password, plain_password):
 
 
 class AuthController:
+    def getFullnameByUserId(userId: int, db: Session = Depends(getDatabase)):
+        dbUserDetailId = (
+            db.query(UserDetailModel).filter(UserDetailModel.user_id == userId).first()
+        )
+        if dbUserDetailId is None:
+            return "User not found"
+        return dbUserDetailId.fullname
+    
     def getAllUser(db: Session):
         return db.query(UserModel).all()
 
@@ -125,7 +133,6 @@ class AuthController:
         db.commit()
         db.refresh(db_user_detail)
         access_token = createAccessToken(data={"userId": db_user.id, "role": db_user.role})
-        db_user.password = "hashed"
         return {
             "user": db_user,
             "user_detail": db_user_detail,
@@ -152,7 +159,7 @@ class AuthController:
             "id": user.id,
             "email": user.email,
             "role": user.role,
-            "jwtToken": access_token,
+            "access_token": access_token,
         }
         return response
 
@@ -212,3 +219,14 @@ class AuthController:
         db.delete(dbUserDetailId)
         db.commit()
         return {"msg": "Deleted"}
+    
+    def isLoggedIn(token: str = Depends(reusable_oauth2)):
+        try:
+            verifyToken
+            return {"msg": "You have been logged in"}
+        except PyJWTError:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )

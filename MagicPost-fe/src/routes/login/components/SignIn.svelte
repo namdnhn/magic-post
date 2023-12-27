@@ -3,22 +3,29 @@
 	import { linear } from 'svelte/easing';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import axiosInstance from '../../../axios';
 	// @ts-ignore
 	let access_token = '';
-	let error_messages = ''
+	let error_messages = '';
 	let isRemember = false;
 
 	async function checkIsLoggedIn() {
 		if (sessionStorage.getItem('access_token')) {
-			const response = await fetch('https://laweng-be.vercel.app/api/check_login', {
-				method: 'GET',
-				credentials: 'include',
+			const res = await axiosInstance.get('/auth/check_login', {
 				headers: {
 					Authorization: `Bearer ${sessionStorage.getItem('access_token')}`
 				}
 			});
-			const information = await response.json();
-			if (response.status == 200 && information.isLogin) {
+			// const response = await fetch('https://laweng-be.vercel.app/api/check_login', {
+			// 	method: 'GET',
+			// 	credentials: 'include',
+			// 	headers: {
+			// 		Authorization: `Bearer ${sessionStorage.getItem('access_token')}`
+			// 	}
+			// });
+			const information = res.data;
+			console.log(information);
+			if (res.status == 200 && information.isLogin) {
 				goto('/');
 			}
 		}
@@ -27,23 +34,20 @@
 	// @ts-ignore
 	let isLoginInputValid = [true, true];
 	let inputLoginValue = [
-		'', //username
-		'' //password
+		'', // email
+		'' // password
 	];
 	// @ts-ignore
 	let showPassword = false;
 
 	// @ts-ignore
-	let invalidLoginMessages = [
-		'You need to enter your username.',
-		'The password cannot be less than 7 characters.'
-	];
-    
+	let invalidLoginMessages = ['Vui lòng nhập email.', 'The password cannot be less than 7 characters.'];
+
 	// @ts-ignore
 	// @ts-ignore
 	function checkLoginInput(index) {
 		// @ts-ignore
-        error_messages = ''
+		error_messages = '';
 		isLoginInputValid[index] = inputLoginValue[index].trim() !== '';
 	}
 
@@ -53,7 +57,7 @@
 
 	// @ts-ignore
 	let inputArrays = [
-		{ attrs: { type: 'text' }, placeholder: 'Username' },
+		{ attrs: { type: 'text' }, placeholder: 'Email' },
 		{ attrs: { type: 'password' }, placeholder: 'Password' }
 	];
 
@@ -80,20 +84,19 @@
 		window.removeEventListener('message', (event) => handleMessageFromBackend(event));
 	}
 
-
 	// @ts-ignore
-	function handleMessageFromBackend(event ) {
+	function handleMessageFromBackend(event) {
 		if (event.origin !== 'https://laweng-be.vercel.app') {
-					return; // Bỏ qua các sự kiện từ nguồn không an toàn
-				}
+			return; // Bỏ qua các sự kiện từ nguồn không an toàn
+		}
 
-				// Nhận dữ liệu từ cửa sổ con
+		// Nhận dữ liệu từ cửa sổ con
 		const data = event.data;
 
 		sessionStorage.setItem('access_token', data.access_token);
 	}
 
-    async function handleSignInWithFacebook() {
+	async function handleSignInWithFacebook() {
 		// @ts-ignore
 		// @ts-ignore
 		const popup = await window.open(
@@ -114,32 +117,38 @@
 		window.removeEventListener('message', (event) => handleMessageFromBackend(event));
 	}
 
-
 	async function handleSignIn() {
 		let check = isLoginInputValid.every((value) => value === true) && inputLoginValue.every((value) => value != '');
 		if (check) {
 			let formData = new FormData();
-			formData.append('username', inputLoginValue[0]);
+			formData.append('email', inputLoginValue[0]);
 			formData.append('password', inputLoginValue[1]);
-			const res = await fetch(`https://laweng-be.vercel.app/api/login`, {
-				method: 'POST',
-				body: formData,
-				credentials: 'include'
-			});
-			if (res.status == 200) {
-				const data = await res.json();
-				access_token = data['access_token'];
-				sessionStorage.setItem('access_token', access_token);
-				goto('/');
-			} else {
-				const data = await res.json();
-				error_messages = data.message
+
+			const loginData = {
+				email: inputLoginValue[0],
+				password: inputLoginValue[1]
+			};
+
+			try {
+				const res = await axiosInstance.post('/auth/login', loginData);
+				if (res.status === 200) {
+					console.log(res);
+					const data = res.data;
+					access_token = data.access_token;
+					sessionStorage.setItem('access_token', access_token);
+					goto('/');
+				} else {
+					const data = res.data;
+					error_messages = data.message;
+				}
+			} catch (error) {
+				console.log(error);
 			}
 		} else {
-            for(let i = 0; i < inputLoginValue.length; i++) {
-				checkLoginInput(i)
+			for (let i = 0; i < inputLoginValue.length; i++) {
+				checkLoginInput(i);
 			}
-        }
+		}
 	}
 </script>
 
@@ -168,7 +177,7 @@ transform: translate(-50%, -50%);
 				<button
 					class="bg-white font-semibold active:bg-blueGray-50 text-blueGray-700 px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-semibold text-xs ease-linear transition-all duration-150"
 					type="button"
-                    on:click={handleSignInWithFacebook}
+					on:click={handleSignInWithFacebook}
 				>
 					<i class="facebook fa-brands fa-facebook-f w-5 mr-1 align-middle" />FACEBOOK</button
 				>
@@ -225,9 +234,9 @@ transform: translate(-50%, -50%);
 						{/if}
 					</div>
 				{/each}
-                {#if error_messages != ''}
-                    <span class="error-message">{error_messages}</span>
-                {/if}
+				{#if error_messages != ''}
+					<span class="error-message">{error_messages}</span>
+				{/if}
 				<div>
 					<label class="inline-flex items-center cursor-pointer"
 						><input
@@ -236,11 +245,8 @@ transform: translate(-50%, -50%);
 							class="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
 							bind:checked={isRemember}
 						/>
-							<span class="ml-2 text-sm font-semibold text-blueGray-600">
-								Remember me
-							</span>
-						</label
-					>
+						<span class="ml-2 text-sm font-semibold text-blueGray-600"> Remember me </span>
+					</label>
 				</div>
 				<div class="text-center mt-6">
 					<button
@@ -268,13 +274,7 @@ transform: translate(-50%, -50%);
 	}
 
 	i.google {
-		background: conic-gradient(
-				from -45deg,
-				#ea4335 110deg,
-				#4285f4 90deg 180deg,
-				#34a853 180deg 270deg,
-				#fbbc05 270deg
-			)
+		background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg)
 			73% 55%/150% 150% no-repeat;
 		-webkit-background-clip: text;
 		background-clip: text;
