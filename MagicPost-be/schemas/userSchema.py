@@ -1,7 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel
 from typing import Optional
-from datetime import datetime
 
 class Roles(str, Enum):
     ADMIN = "admin"
@@ -25,7 +24,7 @@ class RegisterUser(BaseModel):
     email: str
     password: str
     fullname: str
-    date_of_birth: datetime
+    date_of_birth: str
     gender: Gender = Gender.OTHER
     role: Roles = Roles.CUSTOMER
     phone: str
@@ -43,7 +42,7 @@ class UpdateUser(ConfirmPassword):
     fullname: Optional[str] = None
     email: Optional[str] = None
     newPassword: Optional[str] = None
-    date_of_birth: Optional[datetime] = None
+    date_of_birth: Optional[str] = None
     gender: Optional[Gender] = None
     role: Optional[Roles] = None
     phone: Optional[str] = None

@@ -112,32 +112,35 @@ class AuthController:
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"User with email {user.email} already exists",
             )
-        db_user = UserModel(
-            email=user.email,
-            password=bcrypt(user.password),
-            role=user.role,
-        )
-        db.add(db_user)
-        db.commit()
-        db.refresh(db_user)
-        db_user_detail = UserDetailModel(
-            user_id = db_user.id,
-            gender = user.gender,
-            date_of_birth = user.date_of_birth,
-            fullname = user.fullname,
-            phone = user.phone,
-            address = user.address,
-            image_path = user.image_path,
-        )
-        db.add(db_user_detail)
-        db.commit()
-        db.refresh(db_user_detail)
-        access_token = createAccessToken(data={"userId": db_user.id, "role": db_user.role})
-        return {
-            "user": db_user,
-            "user_detail": db_user_detail,
-            "jwtToken": access_token,
-        }
+        try:
+            db_user = UserModel(
+                email=user.email,
+                password=bcrypt(user.password),
+                role=user.role,
+            )
+            db.add(db_user)
+            db.commit()
+            db.refresh(db_user)
+            db_user_detail = UserDetailModel(
+                user_id = db_user.id,
+                gender = user.gender,
+                date_of_birth = user.date_of_birth,
+                fullname = user.fullname,
+                phone = user.phone,
+                address = user.address,
+                image_path = user.image_path,
+            )
+            db.add(db_user_detail)
+            db.commit()
+            db.refresh(db_user_detail)
+            access_token = createAccessToken(data={"userId": db_user.id, "role": db_user.role})
+            return {
+                "user": db_user,
+                "user_detail": db_user_detail,
+                "jwtToken": access_token,
+            }
+        except Exception as e:
+            print("Lỗi:", e)
 
     def login(
         request: Login,

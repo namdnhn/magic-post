@@ -2,6 +2,8 @@
 	import { fade } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
 	import { goto } from '$app/navigation';
+	import axiosInstance from '../../../axios';
+	import { error } from '@sveltejs/kit';
 
 	let inputRegisterValue = ['', '', '', '', '', '', ''];
 	let isRegisterInputValid = [true, true, true, true];
@@ -17,7 +19,7 @@
 		'Vui lòng nhập lại mật khẩu.',
 		'Vui lòng nhập ngày tháng năm sinh',
 		'Vui lòng nhập số điện thoại.',
-		'Vui lòng nhập địa chỉ',
+		'Vui lòng nhập địa chỉ'
 	];
 
 	// @ts-ignore
@@ -40,28 +42,29 @@
 	async function handleSignUp() {
 		let check =
 			isRegisterInputValid.every((value) => value === true) && inputRegisterValue.every((value) => value != '');
-		if (check) {
-			let formData = new FormData();
-			formData.append('fullname', inputRegisterValue[0]);
-			formData.append('email', inputRegisterValue[1]);
-			formData.append('password', inputRegisterValue[2]);
-			formData.append('re_password', inputRegisterValue[3]);
-			formData.append('date_of_birth', inputRegisterValue[4]);
-			formData.append('phone_number', inputRegisterValue[5]);
-			formData.append('address', inputRegisterValue[6]);
-			const response = await fetch('https://laweng-be.vercel.app/api/signup', {
-				method: 'POST',
-				body: formData
-			});
-			if (response.status === 200) {
-				toggleMode();
-			} else {
-				const data = await response.json();
-				error_messages = data.message;
-			}
+		if (inputRegisterValue[2] !== inputRegisterValue[3]) {
+			error_messages = 'Mật khẩu không khớp.';
 		} else {
-			for (let i = 0; i < inputRegisterValue.length; i++) {
-				checkRegisterInput(i);
+			if (check) {
+				let data = {
+					fullname: inputRegisterValue[0],
+					email: inputRegisterValue[1],
+					password: inputRegisterValue[2],
+					date_of_birth: inputRegisterValue[4],
+					phone: inputRegisterValue[5],
+					address: inputRegisterValue[6]
+				};
+				let res = await axiosInstance.post('/auth/register', data);
+				let result = res.data;
+				if (res.status === 200) {
+					goto('/');
+				} else {
+					error_messages = result.message;
+				}
+			} else {
+				for (let i = 0; i < inputRegisterValue.length; i++) {
+					checkRegisterInput(i);
+				}
 			}
 		}
 	}
