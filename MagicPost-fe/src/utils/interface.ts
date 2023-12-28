@@ -19,6 +19,20 @@ export enum LocationDepth {
 	WARDS = 3
 }
 
+export enum Catergority {
+	DOCUMENT = 1,
+	PACKAGE = 2
+}
+
+export enum OrderStatus {
+	NEW = 1,
+	PROCESSING = 2,
+	CONFIRM_SEND = 3,
+	CONFIRM_RECEIVE = 4,
+	SUCCESS_DELIVERY = 5,
+	FAILED_DELIVERY = 6
+}
+
 export interface Paginate {
 	totalPages: number;
 	totalItems: number;
@@ -83,4 +97,32 @@ export interface TransactionOrderInteface {
 	orderId: string;
 	address: string;
 	transactionId: string;
+}
+
+
+export interface Order {
+	orderId: number;
+	mainCharge: number;
+	orderDelivery: {
+		id: number;
+		fromLocation: {
+			id: string;
+			customerId: number;
+			name: string;
+			phoneNo: string;
+			address: string;
+			// transactionPoint: OfficesInterface;
+		};
+		// currentLocation: OfficesInterface;
+		toLocation: {
+			id: string;
+			customerId: number;
+			name: string;
+			phoneNo: string;
+			address: string;
+			// transactionPoint: OfficesInterface;
+		};
+		
+	};
+	createAt: string;
 }
