@@ -5,6 +5,7 @@
 	import { Roles, type StaffsInteface } from "src/utils/interface";
     import StaffsModal from 'src/components/modal/StaffsModal.svelte';
     import type { PageData } from './$types';
+	import { onMount } from "svelte";
 
     const tableData: StaffsInteface[] = [
         {
@@ -45,6 +46,12 @@
         },
     ]
     export let data: PageData;
+
+    onMount(() => {
+        console.log(data.streamed?.staffs);
+        console.log(data.streamed?.transaction_staffs);
+        console.log(data.streamed?.gathering_staffs);
+    })
 	function showStaffModal() {
 		(document.getElementById('manager_new_staff') as any).showModal();
 	}
@@ -67,12 +74,12 @@
 		/>
 	</div>
 	<div class="card !rounded-b-none h-[calc(100%-7.5rem)]">
-		<!-- {#await data.streamed?.staffs}
+		{#await data.streamed?.staffs}
 			<Loading message="Đang lấy dữ liệu mới nhất" />
-		{:then staffs} -->
+		{:then staffs}
 			<StaffsTable tableData={tableData}  />
-		<!-- {:catch err}
-			<p>Error :/ {err}</p>
-		{/await} -->
+		{:catch err}
+			<p>Error : {err}</p>
+		{/await}
 	</div>
 </main>

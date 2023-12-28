@@ -1,9 +1,11 @@
 from fastapi import APIRouter, Depends
+from typing import List
 from sqlalchemy.orm import Session
 from database import getDatabase
 from schemas.userSchema import Login, RegisterUser, UpdateUser, ConfirmPassword
 from models.user import UserModel
 from controllers.AuthController import AuthController
+from schemas.userSchema import PreparingLeader
 
 router = APIRouter(
     prefix="/api/v1/auth",
@@ -48,6 +50,10 @@ def get_user_by_email(email: str, db: Session = Depends(getDatabase)):
 @router.get("/check_login")
 def is_logged_in():
     return AuthController.isLoggedIn()
+
+@router.get("/users_not_leader", response_model=List[PreparingLeader])
+def get_users_not_leader(db: Session = Depends(getDatabase)):
+    return AuthController.getUsersNotLeader(db)
 
 @router.put("/users/update/{userId}")
 def update_user(userId: int, request: UpdateUser, db: Session = Depends(getDatabase)):

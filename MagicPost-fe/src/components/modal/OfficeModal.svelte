@@ -3,15 +3,17 @@
 	import { Autocomplete, popup } from '@skeletonlabs/skeleton';
 	import type { AutocompleteOption, PopupSettings } from '@skeletonlabs/skeleton';
 	import { X } from 'lucide-svelte';
-	import { OfficeType, Roles, type OfficesInterface, type StaffsInteface } from 'src/utils/interface';
+	import {
+		OfficeType,
+		Roles,
+		type OfficesInterface,
+	} from 'src/utils/interface';
 	import { onMount } from 'svelte';
 	import { LocationDepth, type LocationSchema } from 'src/utils/interface';
 	import { slide } from 'svelte/transition';
 	import axiosInstance from 'src/axios';
 
 	export let id: string;
-	export let leaderData: StaffsInteface[] = [],
-		gatherPointData: OfficesInterface[] = [];
 	export let officeData: OfficesInterface | null = null;
 	let name: string,
 		address: string,
@@ -23,16 +25,6 @@
 		gatherPointLabel = '';
 	let loading = false,
 		error: string;
-
-	function onLeaderSelect(event: CustomEvent<AutocompleteOption<string>>): void {
-		leaderLabel = event.detail.label;
-		leader = event.detail.value;
-	}
-
-	function onGatherPointSelect(event: CustomEvent<AutocompleteOption<string>>): void {
-		gatherPointLabel = event.detail.label;
-		linkGatherPoint = event.detail.value;
-	}
 
 	async function createNewOffice() {
 		const requiredBody = {
@@ -58,8 +50,8 @@
 					name: name,
 					address: address,
 					phone: phoneNo,
-					user_email: leader,
-				}
+					user_email: leader
+				};
 				const response = await axiosInstance.post('/manage/gathering_point_by_current_user/', postData);
 				if (response.status == 200) {
 					(document.getElementById(id) as any).close();
@@ -68,7 +60,7 @@
 				loading = false;
 				return;
 			}
-			
+
 			const postData = {
 				name: name,
 				province_code: provinceCode,
@@ -77,8 +69,8 @@
 				address: address,
 				phone: phoneNo,
 				user_email: leader,
-				gathering_point_id: parseInt(linkGatherPoint)
-			}
+				gathering_point_id: gatherPointLabel
+			};
 
 			const response = await axiosInstance.post('/manage/transaction_point_by_current_user/', postData);
 
@@ -88,61 +80,6 @@
 			}
 			loading = false;
 			return;
-		});
-	}
-
-	// async function getLeaderData() {
-	// 	const response = await fetch('/api/admin/staffs', {
-	// 		method: 'GET'
-	// 	});
-
-	// 	const data = await response.json();
-	// 	return data.data.content;
-	// }
-
-	let leaderPopupSettings: PopupSettings = {
-		event: 'focus-click',
-		target: 'leader-autofill',
-		placement: 'top'
-	};
-	let leaderAutoComplete: AutocompleteOption<string>[] = [];
-	let gatherPopupSettings: PopupSettings = {
-		event: 'focus-click',
-		target: 'gatherPoint-autofill',
-		placement: 'top'
-	};
-	let gatherAutoComplete: AutocompleteOption<string>[] = [];
-
-	$: {
-		// (leader = ''), (leaderLabel = ''), (linkGatherPoint = ''), (gatherPointLabel = '');
-		leaderAutoComplete = [];
-		leaderData
-			.filter((leader) => {
-				return leader.role.id == (type == OfficeType.TRANSACTION ? Roles.TRANSACTION_LEADER : Roles.GATHERING_LEADER);
-			})
-			.map((leader) => {
-				leaderAutoComplete = [
-					...leaderAutoComplete,
-					{
-						label: `${leader.userId} - ${leader.fullName}`,
-						value: `${leader.id}`,
-						keywords: `${leader.email}`,
-						meta: { healthy: false }
-					}
-				];
-			});
-
-		gatherAutoComplete = [];
-		gatherPointData.map((point) => {
-			gatherAutoComplete = [
-				...gatherAutoComplete,
-				{
-					label: `${point.pointId} - ${point.name}`,
-					value: `${point.id}`,
-					keywords: `${point.name}, ${point.pointId}, ${point.address}`,
-					meta: { healthy: false }
-				}
-			];
 		});
 	}
 
@@ -165,16 +102,11 @@
 	}
 
 	onMount(async () => {
-		
-	});
-
-	onMount(async () => {
 		if (officeData) {
 			name = officeData.name;
 			address = officeData.address;
 			phoneNo = officeData.phoneNo;
 			leaderLabel = officeData.leader?.fullName;
-			// leaderData = await getLeaderData();
 			// console.log('🚀 ~ file: OfficeModal.svelte:133 ~ leaderData:', leaderData);
 		}
 
@@ -207,69 +139,69 @@
 				<span class="dui-label-text required-label">Địa chỉ</span>
 			</label>
 			<input
-			type="text"
-			bind:value={address}
-			name="address"
-			placeholder="Nhập địa chỉ"
-			class="dui-input h-10 dui-input-bordered w-full"
-		/>
+				type="text"
+				bind:value={address}
+				name="address"
+				placeholder="Nhập địa chỉ"
+				class="dui-input h-10 dui-input-bordered w-full"
+			/>
 			{#if type == OfficeType.TRANSACTION}
-			<div class="grid grid-cols-3 gap-1 w-full mb-1 mt-3">
-				<select
-					name="type"
-					required
-					class="dui-select dui-select-sm dui-select-bordered w-full h-10"
-					on:change={(e) => {
-						location.wards = [];
-						//@ts-ignore
-						provinceCode = e.target.value;
-						getLocationData(LocationDepth.DISTRICT, provinceCode).then((data) => {
-							location.districts = data;
-							district.selectedIndex = 0;
+				<div class="grid grid-cols-3 gap-1 w-full mb-1 mt-3">
+					<select
+						name="type"
+						required
+						class="dui-select dui-select-sm dui-select-bordered w-full h-10"
+						on:change={(e) => {
+							location.wards = [];
+							//@ts-ignore
+							provinceCode = e.target.value;
+							getLocationData(LocationDepth.DISTRICT, provinceCode).then((data) => {
+								location.districts = data;
+								district.selectedIndex = 0;
+								ward.selectedIndex = 0;
+							});
+						}}
+					>
+						<option value="" disabled selected hidden>---Tỉnh/Thành phố---</option>
+						{#each location.provinces as province}
+							<option value={province.code}>{province.name}</option>
+						{/each}
+					</select>
+
+					<select
+						name="type"
+						required
+						class="dui-select dui-select-sm dui-select-bordered w-full h-10"
+						bind:this={district}
+						disabled={location.districts.length == 0}
+						on:change={(e) => {
+							//@ts-ignore
+							districtCode = e.target.value;
 							ward.selectedIndex = 0;
-						});
-					}}
-				>
-					<option value="" disabled selected hidden>---Tỉnh/Thành phố---</option>
-					{#each location.provinces as province}
-						<option value={province.code}>{province.name}</option>
-					{/each}
-				</select>
-		
-				<select
-					name="type"
-					required
-					class="dui-select dui-select-sm dui-select-bordered w-full h-10"
-					bind:this={district}
-					disabled={location.districts.length == 0}
-					on:change={(e) => {
-						//@ts-ignore
-						districtCode = e.target.value;
-						ward.selectedIndex = 0;
-						getLocationData(LocationDepth.WARDS, provinceCode, districtCode).then((data) => {
-							location.wards = data;
-						});
-					}}
-				>
-					<option value="" disabled selected hidden>---Quận/Huyện---</option>
-					{#each location.districts as district}
-						<option value={district.code}>{district.name}</option>
-					{/each}
-				</select>
-		
-				<select
-					name="type"
-					required
-					class="dui-select dui-select-sm dui-select-bordered w-full h-10"
-					disabled={location.wards.length == 0}
-					bind:this={ward}
-				>
-					<option value="" disabled selected hidden>---Phường/Xã---</option>
-					{#each location.wards as ward}
-						<option value={ward.code}>{ward.name}</option>
-					{/each}
-				</select>
-			</div>
+							getLocationData(LocationDepth.WARDS, provinceCode, districtCode).then((data) => {
+								location.wards = data;
+							});
+						}}
+					>
+						<option value="" disabled selected hidden>---Quận/Huyện---</option>
+						{#each location.districts as district}
+							<option value={district.code}>{district.name}</option>
+						{/each}
+					</select>
+
+					<select
+						name="type"
+						required
+						class="dui-select dui-select-sm dui-select-bordered w-full h-10"
+						disabled={location.wards.length == 0}
+						bind:this={ward}
+					>
+						<option value="" disabled selected hidden>---Phường/Xã---</option>
+						{#each location.wards as ward}
+							<option value={ward.code}>{ward.name}</option>
+						{/each}
+					</select>
+				</div>
 			{/if}
 
 			<label class="dui-label pb-1" for="address">
@@ -325,31 +257,12 @@
 						<span class="dui-label-text required-label">Trưởng điểm quản lý</span>
 					</label>
 					<input
-						type="search"
+						type="text"
 						name="leader"
 						placeholder="Chọn trưởng điểm"
 						class="dui-input h-10 dui-input-bordered w-full"
-						use:popup={leaderPopupSettings}
-						bind:value={leaderLabel}
+						bind:value={leader}
 					/>
-					<div data-popup="leader-autofill" class="card w-full max-w-sm max-h-60 p-4 overflow-y-auto">
-						<div class="w-full flex justify-end sticky top-0">
-							<button class="dui-btn dui-btn-square dui-btn-xs">
-								<X size={15} />
-							</button>
-						</div>
-						{#if leaderAutoComplete.length == 0}
-							<div>Không có nhân viên nào!</div>
-						{:else}
-							<Autocomplete
-								options={leaderAutoComplete}
-								bind:input={leaderLabel}
-								on:selection={onLeaderSelect}
-								transitionOutParams={{ delay: 0, duration: 0 }}
-								emptyState="Không có kết quả nào"
-							/>
-						{/if}
-					</div>
 				</div>
 			</div>
 
@@ -363,26 +276,8 @@
 						name="name"
 						placeholder="Chọn điểm tập kết"
 						class="dui-input h-10 dui-input-bordered w-full"
-						use:popup={gatherPopupSettings}
 						bind:value={gatherPointLabel}
 					/>
-					<div data-popup="gatherPoint-autofill" class="card w-full max-w-sm max-h-60 p-4 overflow-y-auto">
-						<div class="w-full flex justify-end sticky top-0">
-							<button class="dui-btn dui-btn-square dui-btn-xs">
-								<X size={15} />
-							</button>
-						</div>
-						{#if gatherAutoComplete.length == 0}
-							<div>Không còn điểm tập kết trống!</div>
-						{:else}
-							<Autocomplete
-								options={gatherAutoComplete}
-								bind:input={linkGatherPoint}
-								on:selection={onGatherPointSelect}
-								transitionOutParams={{ delay: 0, duration: 0 }}
-							/>
-						{/if}
-					</div>
 				</div>
 			{/if}
 		</main>
