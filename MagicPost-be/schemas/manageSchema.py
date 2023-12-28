@@ -17,10 +17,14 @@ class Admin(AdminBase):
 
 class GatheringPointBase(BaseModel):
     name: str
+    address: Optional[str] = None
+    phone: Optional[str] = None
 
 class GatheringPointCreate(GatheringPointBase):
     pass
 
+class GatheringPointCreateByCurrentUser(GatheringPointBase):
+    user_email: str
 
 
 class TransactionPointBase(BaseModel):
@@ -34,6 +38,9 @@ class TransactionPointBase(BaseModel):
 
 class TransactionPointCreate(TransactionPointBase):
     pass
+
+class TransactionPointCreateByCurrentUser(TransactionPointBase):
+    user_email: str
 
 class TransactionPoint(TransactionPointBase):
     id: int

@@ -5,11 +5,10 @@
 	import Loading from 'src/components/Loading.svelte';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
-	import axiosInstance from 'src/axios';
 	import { onMount } from 'svelte';
 
 	export let data: PageData | any;
-	let officeType: 'giao dịch' | 'tập kết' | 'toàn bộ' = 'toàn bộ';
+	let officeType: 'giao dịch' | 'tập kết' = 'tập kết';
 
 	function showOfficeModal() {
 		(document.getElementById('new_office_modal') as any).showModal();
@@ -22,10 +21,10 @@
 		if (officeType == 'giao dịch') {
 			goto('?type=TP');
 		}
-		if (officeType == 'toàn bộ') {
-			goto('/admin/offices');
-		}
 	}
+
+	onMount(async () => {
+	});
 
 	// onMount(async () => {
 	// 	const response = await axiosInstance.get('/manage/gathering_points/');
@@ -60,20 +59,30 @@
 				class="dui-select dui-select-sm dui-select-bordered w-full !h-8"
 				bind:value={officeType}
 			>
-				<option value="toàn bộ">Tất cả</option>
 				<option value="giao dịch">Điểm giao dịch</option>
 				<option value="tập kết">Điểm tập kết</option>
 			</select>
 		</div>
 	</div>
 	<div class="card !rounded-b-none h-[calc(100%-7.5rem)]">
-		{#await data.offices.promise}
-			<Loading message="Đang lấy dữ liệu mới nhất" />
-		{:then offices}
-			<OfficesTable tableData={offices.data.content} {officeType} />
-		{:catch err}
-			<p>Error</p>
-		{/await}
+		{#if officeType == 'tập kết'}
+			{#await data.gatheringPoints.promise}
+				<Loading message="Đang lấy dữ liệu mới nhất" />
+			{:then gatheringPoints}
+				<OfficesTable tableData={gatheringPoints} {officeType} />
+			{:catch err}
+				<p>Error: {err}</p>
+			{/await}
+		{/if}
+		{#if officeType == 'giao dịch'}
+			{#await data.transactionPoints.promise}
+				<Loading message="Đang lấy dữ liệu mới nhất" />
+			{:then transactionPoints}
+				<OfficesTable tableData={transactionPoints} {officeType} />
+			{:catch err}
+				<p>Error: {err}</p>
+			{/await}
+		{/if}
 	</div>
 </main>
 

@@ -101,6 +101,12 @@ class AuthController:
 
     def getUserByEmail(email: str, db: Session = Depends(getDatabase)):
         return db.query(UserModel).filter(UserModel.email == email).first()
+    
+    def getUserIdByEmail(email: str, db: Session = Depends(getDatabase)):
+        dbUser = db.query(UserModel).filter(UserModel.email == email).first()
+        if dbUser is None:
+            return None
+        return dbUser.id
 
     def getUserById(userId: int, db: Session = Depends(getDatabase)):
         return db.query(UserModel).filter(UserModel.id == userId).first()

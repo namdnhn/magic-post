@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import { LocationDepth, type LocationSchema } from 'src/utils/interface';
 	import { slide } from 'svelte/transition';
+	import axiosInstance from 'src/axios';
 
 	export let id: string;
 	export let leaderData: StaffsInteface[] = [],
@@ -51,30 +52,53 @@
 			}
 
 			loading = true;
-			const response = await fetch('/api/admin/offices', {
-				method: 'POST',
-				body: JSON.stringify(body)
-			});
 
-			const officesData = await response.json();
+			if (type == OfficeType.GATHERING) {
+				const postData = {
+					name: name,
+					address: address,
+					phone: phoneNo,
+					user_email: leader,
+				}
+				const response = await axiosInstance.post('/manage/gathering_point_by_current_user/', postData);
+				if (response.status == 200) {
+					(document.getElementById(id) as any).close();
+					// invalidate((url) => url.pathname.includes('/api/admin/offices'));
+				}
+				loading = false;
+				return;
+			}
+			
+			const postData = {
+				name: name,
+				province_code: provinceCode,
+				district_code: districtCode,
+				ward_code: ward.value,
+				address: address,
+				phone: phoneNo,
+				user_email: leader,
+				gathering_point_id: parseInt(linkGatherPoint)
+			}
 
-			if (officesData.status == 201) {
+			const response = await axiosInstance.post('/manage/transaction_point_by_current_user/', postData);
+
+			if (response.status == 200) {
 				(document.getElementById(id) as any).close();
-				invalidate((url) => url.pathname.includes('/api/admin/offices'));
+				// invalidate((url) => url.pathname.includes('/api/admin/offices'));
 			}
 			loading = false;
 			return;
 		});
 	}
 
-	async function getLeaderData() {
-		const response = await fetch('/api/admin/staffs', {
-			method: 'GET'
-		});
+	// async function getLeaderData() {
+	// 	const response = await fetch('/api/admin/staffs', {
+	// 		method: 'GET'
+	// 	});
 
-		const data = await response.json();
-		return data.data.content;
-	}
+	// 	const data = await response.json();
+	// 	return data.data.content;
+	// }
 
 	let leaderPopupSettings: PopupSettings = {
 		event: 'focus-click',
@@ -149,8 +173,8 @@
 			name = officeData.name;
 			address = officeData.address;
 			phoneNo = officeData.phoneNo;
-			leaderLabel = officeData.admin?.fullName;
-			leaderData = await getLeaderData();
+			leaderLabel = officeData.leader?.fullName;
+			// leaderData = await getLeaderData();
 			// console.log('🚀 ~ file: OfficeModal.svelte:133 ~ leaderData:', leaderData);
 		}
 

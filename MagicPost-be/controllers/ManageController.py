@@ -15,6 +15,8 @@ from schemas.manageSchema import (
     TransactionLeader,
     TransactionStaff,
     GatheringPoint,
+    GatheringPointCreateByCurrentUser,
+    TransactionPointCreateByCurrentUser,
     TransactionPointCreate,
     GatheringPointCreate,
     Destination,
@@ -74,6 +76,29 @@ class ManageController:
                 detail=f"Gathering point not found",
             )
         return gathering_point
+    
+    def getAllGatheringPointsWithNoLeader(db: Session):
+        offices: List[Offices] = []
+        gathering_points = db.query(GatheringPointModel).all()
+        
+        for point in gathering_points:
+            leader = point.gathering_leader[0]
+            if not leader:
+                new_office = Offices(
+                    id=str(point.id),
+                    pointId=str(point.id),
+                    name=point.name,
+                    phoneNo=point.phone,
+                    address=point.address,
+                    leader=Leader(
+                        userId="",
+                        fullName="",
+                    ),
+                    type="Điểm tập kết",
+                )
+                offices.append(new_office)
+            
+        return offices
 
     def getAllGatheringLeaders(db: Session):
         leaders: List[Staff] = []
@@ -346,6 +371,104 @@ class ManageController:
         db.commit()
         db.refresh(new_transaction_staff)
         return {"user": new_user, "user_detail": new_transaction_staff}
+    
+    def createGatheringLeaderByCurrentUser(gathering_point_id: int, user_email: str, db: Session):
+        user_id = AuthController.getUserIdByEmail(user_email, db)
+        if user_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User not found",
+            )
+        is_gathering_leader_exist = (
+            db.query(GatheringLeaderModel)
+            .filter(GatheringLeaderModel.gathering_point_id == gathering_point_id)
+            .first()
+        )
+        if is_gathering_leader_exist:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Gathering leader already exist",
+            )
+        new_gathering_leader = GatheringLeaderModel(
+            user_id=user_id,
+            gathering_point_id=gathering_point_id,
+        )
+        return new_gathering_leader
+    
+    def createTransactionLeaderByCurrentUser(transaction_point_id: int, user_email: str, db: Session):
+        user_id = AuthController.getUserIdByEmail(user_email, db)
+        if user_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User not found",
+            )
+        is_transaction_leader_exist = (
+            db.query(TransactionLeaderModel)
+            .filter(TransactionLeaderModel.transaction_point_id == transaction_point_id)
+            .first()
+        )
+        if is_transaction_leader_exist:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Transaction leader already exist",
+            )
+        new_transaction_leader = TransactionLeaderModel(
+            user_id=user_id,
+            transaction_point_id=transaction_point_id,
+        )
+        return new_transaction_leader
+    
+    def createGatheringPointByCurrentUser(gathering_point: GatheringPointCreateByCurrentUser, db: Session):
+        user_id = AuthController.getUserIdByEmail(gathering_point.user_email, db)
+        if user_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User not found",
+            )
+        new_gathering_point = GatheringPointModel(
+            name=gathering_point.name,
+            address=gathering_point.address,
+            phone=gathering_point.phone,
+        )
+        db.add(new_gathering_point)
+        db.commit()
+        db.refresh(new_gathering_point)
+        new_gathering_leader = GatheringLeaderModel(
+            user_id=user_id,
+            gathering_point_id=new_gathering_point.id,
+        )
+        db.add(new_gathering_leader)
+        db.commit()
+        db.refresh(new_gathering_leader)
+        return new_gathering_point
+    
+    def createTransactionPointByCurrentUser(transaction_point: TransactionPointCreateByCurrentUser, db: Session):
+        user_id = AuthController.getUserIdByEmail(transaction_point.user_email, db)
+        if user_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User not found",
+            )
+        new_transaction_point = TransactionPointModel(
+            name=transaction_point.name,
+            province_code=transaction_point.province_code,
+            district_code=transaction_point.district_code,
+            ward_code=transaction_point.ward_code,
+            address=transaction_point.address,
+            phone=transaction_point.phone,
+            gathering_point_id=transaction_point.gathering_point_id,
+        )
+        db.add(new_transaction_point)
+        db.commit()
+        db.refresh(new_transaction_point)
+        new_transaction_leader = TransactionLeaderModel(
+            user_id=user_id,
+            transaction_point_id=new_transaction_point.id,
+        )
+        db.add(new_transaction_leader)
+        db.commit()
+        db.refresh(new_transaction_leader)
+        return new_transaction_point
 
     def deleteGatheringLeader(gathering_leader_id: int, db: Session):
         gathering_leader = (

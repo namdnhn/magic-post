@@ -4,6 +4,7 @@ from database import getDatabase
 from controllers.ManageController import ManageController
 from schemas.manageSchema import (
     GatheringPointCreate,
+    GatheringPointCreateByCurrentUser,
     TransactionPointCreate,
     Destination,
     GatheringPoint,
@@ -14,6 +15,7 @@ from schemas.manageSchema import (
     TransactionStaff,
     Staff,
     Offices,
+    TransactionPointCreateByCurrentUser
 )
 from schemas.userSchema import RegisterUser
 from typing import List
@@ -24,9 +26,12 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.get("/gathering_points/")
+@router.get("/gathering_points/", response_model=List[Offices])
 async def get_all_gathering_points(db: Session = Depends(getDatabase)):
     return ManageController.getAllGatheringPoints(db)
+
+async def get_all_gathering_points_with_no_leader(db: Session = Depends(getDatabase)):
+    return ManageController.getAllGatheringPointsWithNoLeader(db)
 
 @router.get("/gathering_point_by_transaction_point/{transaction_point_id}", response_model=GatheringPoint)
 async def get_gathering_point_by_transaction_point(transaction_point_id: int, db: Session = Depends(getDatabase)):
@@ -60,9 +65,17 @@ async def get_all_transaction_staffs(db: Session = Depends(getDatabase)):
 async def create_gathering_point(gathering_point: GatheringPointCreate, db: Session = Depends(getDatabase)):
     return ManageController.createGatheringPoint(gathering_point, db)
 
+@router.post("/gathering_point_by_current_user/")
+async def create_gathering_point_by_current_user(gathering_point: GatheringPointCreateByCurrentUser, db: Session = Depends(getDatabase)):
+    return ManageController.createGatheringPointByCurrentUser(gathering_point, db)
+
 @router.post("/transaction_point/")
 async def create_transaction_point(transaction_point: TransactionPointCreate, db: Session = Depends(getDatabase)):
     return ManageController.createTransactionPoint(transaction_point, db)
+
+@router.post("/transaction_point_by_current_user/")
+async def create_transaction_point_by_current_user(transaction_point: TransactionPointCreateByCurrentUser, db: Session = Depends(getDatabase)):
+    return ManageController.createTransactionPointByCurrentUser(transaction_point, db)
 
 @router.post("/gathering_leader/{gathering_point_id}")
 async def create_gathering_leader(register_user: RegisterUser, gathering_point_id: int, db: Session = Depends(getDatabase)):
