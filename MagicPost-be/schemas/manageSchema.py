@@ -25,9 +25,9 @@ class GatheringPointCreate(GatheringPointBase):
 
 class TransactionPointBase(BaseModel):
     name: str
-    province_code: str
-    district_code: str
-    ward_code: str
+    province_code: int
+    district_code: int
+    ward_code: int
     address: str
     phone: str
     gathering_point_id: int
@@ -114,9 +114,9 @@ class Shipper(ShipperBase):
         orm_mode = True
         
 class Destination(BaseModel):
-    province_code: str
-    district_code: str
-    ward_code: str
+    province_code: int
+    district_code: int
+    ward_code: int
 
 class Roles(BaseModel):
     id: str

@@ -10,20 +10,20 @@ class PackageBase(BaseModel):
     name: str
     price: int
     description: str
-    image: HttpUrl
+    image: str
     transaction_point_id: int
     destination_id: int
     sender_name: str
     sender_phone: str
-    sender_province_code: str
-    sender_district_code: str
-    sender_ward_code: str
+    sender_province_code: int
+    sender_district_code: int
+    sender_ward_code: int
     sender_address: str
     receiver_name: str
     receiver_phone: str
-    receiver_province_code: str
-    receiver_district_code: str
-    receiver_ward_code: str
+    receiver_province_code: int
+    receiver_district_code: int
+    receiver_ward_code: int
     receiver_address: str
     weight: float = 0.0
     package_type: PackageType = PackageType.GOODS

@@ -25,9 +25,9 @@ class TransactionPointModel(database.Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), index=True)
-    province_code = Column(String(50), ForeignKey("provinces.code"))
-    district_code = Column(String(50), ForeignKey("districts.code"))
-    ward_code = Column(String(50), ForeignKey("wards.code"))
+    province_code = Column(Integer)
+    district_code = Column(Integer)
+    ward_code = Column(Integer)
     address = Column(String(255))
     phone = Column(String(255))
     gathering_point_id = Column(Integer, ForeignKey("gathering_point.id"))

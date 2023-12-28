@@ -7,6 +7,14 @@ import enum
 class PackageType(str, enum.Enum):
     DOCUMENT = "document"
     GOODS = "goods"
+    
+class PackageStatus(str, enum.Enum):
+    WAITING = "waiting"
+    STORING = "storing"
+    DELIVERED = "delivered"
+    SHIPPING = "shipping"
+    CANCELED = "canceled"
+    SUCCESS = "success"
 
 class PackageModel(database.Base):
     __tablename__ = "package"
@@ -17,18 +25,20 @@ class PackageModel(database.Base):
     description = Column(String(255))
     image = Column(String(255))
     transaction_point_id = Column(Integer, ForeignKey("transaction_point.id"))
-    destination_id = Column(Integer, ForeignKey("transaction_point.id"))
+    destination_transaction_id = Column(Integer, ForeignKey("transaction_point.id"))
+    gathering_point_id = Column(Integer, ForeignKey("gathering_point.id"))
+    destination_gathering_id = Column(Integer, ForeignKey("gathering_point.id"))
     sender_name = Column(String(255))
     sender_phone = Column(String(255))
-    sender_province_code = Column(String(50), ForeignKey("provinces.code"))
-    sender_district_code = Column(String(50), ForeignKey("districts.code"))
-    sender_ward_code = Column(String(50), ForeignKey("wards.code"))
+    sender_province_code = Column(Integer)
+    sender_district_code = Column(Integer)
+    sender_ward_code = Column(Integer)
     sender_address = Column(String(255))
     receiver_name = Column(String(255))
     receiver_phone = Column(String(255))
-    receiver_province_code = Column(String(50), ForeignKey("provinces.code"))
-    receiver_district_code = Column(String(50), ForeignKey("districts.code"))
-    receiver_ward_code = Column(String(50), ForeignKey("wards.code"))
+    receiver_province_code = Column(Integer)
+    receiver_district_code = Column(Integer)
+    receiver_ward_code = Column(Integer)
     receiver_address = Column(String(255))
     weight = Column(Float, default=0.0)
     price = Column(Integer)
@@ -55,11 +65,13 @@ class PackageStatusModel(database.Base):
 
     id = Column(BigInteger, primary_key=True, index=True)
     package_id = Column(BigInteger, ForeignKey("package.id"))
-    status = Column(String(255))
+    status = Column(Enum(PackageStatus), default=PackageStatus.WAITING)
     fail_reason = Column(String(255), nullable=True)
     transaction_point_id = Column(Integer, ForeignKey("transaction_point.id"), nullable=True)
     gathering_point_id = Column(Integer, ForeignKey("gathering_point.id"), nullable=True)
     shipper_id = Column(Integer, ForeignKey("shipper.id"), nullable=True)
+    received_time = Column(DateTime, nullable=True)
+    delivered_time = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now())
     
