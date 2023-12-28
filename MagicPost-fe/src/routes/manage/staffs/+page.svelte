@@ -2,7 +2,8 @@
 	import { PlusCircle } from "lucide-svelte";
 	import StaffsTable from "src/components/table/StaffsTable.svelte";
 	import { Roles, type StaffsInteface } from "src/utils/interface";
-
+    import StaffsModal from 'src/components/modal/StaffsModal.svelte';
+    
     const tableData: StaffsInteface[] = [
         {
             id: "",

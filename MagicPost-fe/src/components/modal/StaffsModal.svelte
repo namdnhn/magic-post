@@ -1,11 +1,16 @@
 <script lang="ts">
-	import { invalidate } from '$app/navigation';
-	import { Roles, type StaffsInteface } from 'src/utils/interface';
+	import { goto, invalidate } from '$app/navigation';
+	import { getUserStorage } from 'src/lib/userLocalStorage';
+	import { Roles } from 'src/utils/enum';
+	import type { StaffsInteface } from 'src/utils/interface';
 	import { onMount } from 'svelte';
 
 	export let id: string,
-		staff: StaffsInteface | null = null;
+		staff: StaffsInteface | null = null,
+		title: string = 'nhân viên trưởng điểm',
+		showSelectRole = true;
 
+	const user = getUserStorage();
 	let fullName: string,
 		email: string,
 		address: string,
@@ -17,6 +22,12 @@
 
 	async function createNewStaff() {
 		error = '';
+		if (user?.role.id == Roles.TRANSACTION_LEADER) {
+			role = Roles.TRANSACTION_STAFF;
+		}
+		if (user?.role.id == Roles.GATHERING_LEADER) {
+			role = Roles.GATHERS_STAFF;
+		}
 		const body = {
 			fullName,
 			dateOfBirth,
@@ -43,6 +54,7 @@
 			if (staffData.status == 201) {
 				(document.getElementById(id) as any).close();
 				invalidate((url) => url.pathname.includes('/api/admin/staffs'));
+				goto('/admin/staffs');
 			}
 			loading = false;
 			return;
@@ -57,7 +69,7 @@
 			phoneNo,
 			address,
 			email,
-			role: staff?.role.id
+			role
 		};
 
 		Object.values(body).some(async (value) => {
@@ -85,6 +97,7 @@
 
 	onMount(() => {
 		if (staff) {
+			role = staff.role.id;
 			fullName = staff.fullName;
 			email = staff.email;
 			address = staff.address;
@@ -100,7 +113,8 @@
 			<button class="dui-btn dui-btn-sm dui-btn-square dui-btn-ghost absolute right-2 top-3">✕</button>
 		</form>
 		<h3 class="text-xl text-center mb-2">
-			{staff ? 'Chỉnh sửa' : 'Thêm mới'} nhân viên trưởng điểm
+			{staff ? 'Chỉnh sửa' : 'Thêm mới'}
+			{title}
 		</h3>
 		<div class="dui-divider m-0 -mx-6" />
 		<main>
@@ -164,42 +178,45 @@
 				</div>
 			</div>
 
-			<label class="dui-label pb-1" for="role-radio">
-				<span class="dui-label-text required-label">Chức vụ</span>
-			</label>
-			{#if staff && staff?.role.id}
-				<input
-					type="text"
-					value={staff.role.name}
-					name="role"
-					disabled
-					class="dui-input h-10 dui-input-bordered w-full mb-3"
-				/>
-			{:else}
-				<div class="grid grid-cols-2 gap-3">
-					<label class="dui-label cursor-pointer justify-start">
-						<input
-							type="radio"
-							on:change={() => (role = Roles.TRANSACTION_LEADER)}
-							name="role-radio"
-							class="dui-radio dui-radio-sm checked:bg-secondary-500"
-							checked
-						/>
-						<span class="dui-label-text ml-2">Trưởng điểm giao dịch</span>
-					</label>
-					<label class="dui-label cursor-pointer justify-start">
-						<input
-							type="radio"
-							on:change={() => (role = Roles.GATHERING_LEADER)}
-							name="role-radio"
-							class="dui-radio dui-radio-sm checked:bg-secondary-500"
-						/>
-						<span class="dui-label-text ml-2">Trưởng điểm tập kết</span>
-					</label>
-				</div>
+			{#if showSelectRole}
+				<label class="dui-label pb-1" for="role-radio">
+					<span class="dui-label-text required-label">Chức vụ</span>
+				</label>
+				{#if staff && staff.workAt}
+					<input
+						type="text"
+						value={staff.role.name}
+						name="role"
+						disabled
+						class="dui-input h-10 dui-input-bordered w-full mb-3"
+					/>
+				{:else}
+					<div class="grid grid-cols-2 gap-3">
+						<label class="dui-label cursor-pointer justify-start">
+							<input
+								type="radio"
+								on:change={() => (role = Roles.TRANSACTION_LEADER)}
+								name={staff ? `role-radio-${staff.id}` : 'role-radio'}
+								class="dui-radio dui-radio-sm checked:bg-primary-500"
+								checked={role == Roles.TRANSACTION_LEADER}
+							/>
+							<span class="dui-label-text ml-2">Trưởng điểm giao dịch</span>
+						</label>
+						<label class="dui-label cursor-pointer justify-start">
+							<input
+								type="radio"
+								on:change={() => (role = Roles.GATHERING_LEADER)}
+								name={staff ? `role-radio-${staff.id}` : 'role-radio'}
+								class="dui-radio dui-radio-sm checked:bg-primary-500"
+								checked={role == Roles.GATHERING_LEADER}
+							/>
+							<span class="dui-label-text ml-2">Trưởng điểm tập kết</span>
+						</label>
+					</div>
+				{/if}
 			{/if}
 		</main>
-		<div class="dui-divider m-0 -mx-6" />
+		<div class="dui-divider m-0 -mx-6" class:mt-2={!showSelectRole} />
 		{#if error}
 			<p class="text-fail text-end font-bold mt-1">{error}</p>
 		{/if}
@@ -210,7 +227,7 @@
 				</button>
 			</form>
 			<button
-				class="btn variant-filled bg-secondary-600"
+				class="btn variant-filled bg-primary-600"
 				class:animate-spin={loading}
 				disabled={loading}
 				on:click={() => (staff ? updateStaff(staff.id) : createNewStaff())}

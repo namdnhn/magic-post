@@ -5,7 +5,7 @@
 	import { X } from 'lucide-svelte';
 	import { OfficeType, Roles, type OfficesInterface, type StaffsInteface } from 'src/utils/interface';
 	import { onMount } from 'svelte';
-
+	import { LocationDepth, type LocationSchema } from 'src/utils/interface';
 	import { slide } from 'svelte/transition';
 
 	export let id: string;
@@ -122,6 +122,28 @@
 		});
 	}
 
+	let location = {
+			provinces: [] as LocationSchema[],
+			districts: [] as LocationSchema[],
+			wards: [] as LocationSchema[]
+		},
+		provinceCode = -1,
+		districtCode = -1;
+	let district: HTMLSelectElement, ward: HTMLSelectElement;
+
+	async function getLocationData(depth: number, provinceCode?: number, districtCode?: number) {
+		const response = await fetch(`/api/location-vn?depth=${depth}&province=${provinceCode}&district=${districtCode}`, {
+			method: 'GET'
+		});
+
+		const data = await response.json();
+		return data.data;
+	}
+
+	onMount(async () => {
+		
+	});
+
 	onMount(async () => {
 		if (officeData) {
 			name = officeData.name;
@@ -131,6 +153,8 @@
 			leaderData = await getLeaderData();
 			// console.log('🚀 ~ file: OfficeModal.svelte:133 ~ leaderData:', leaderData);
 		}
+
+		location.provinces = await getLocationData(LocationDepth.PROVINCE);
 	});
 </script>
 
@@ -159,12 +183,70 @@
 				<span class="dui-label-text required-label">Địa chỉ</span>
 			</label>
 			<input
-				type="text"
-				bind:value={address}
-				name="address"
-				placeholder="Nhập địa chỉ"
-				class="dui-input h-10 dui-input-bordered w-full"
-			/>
+			type="text"
+			bind:value={address}
+			name="address"
+			placeholder="Nhập địa chỉ"
+			class="dui-input h-10 dui-input-bordered w-full"
+		/>
+			{#if type == OfficeType.TRANSACTION}
+			<div class="grid grid-cols-3 gap-1 w-full mb-1 mt-3">
+				<select
+					name="type"
+					required
+					class="dui-select dui-select-sm dui-select-bordered w-full h-10"
+					on:change={(e) => {
+						location.wards = [];
+						//@ts-ignore
+						provinceCode = e.target.value;
+						getLocationData(LocationDepth.DISTRICT, provinceCode).then((data) => {
+							location.districts = data;
+							district.selectedIndex = 0;
+							ward.selectedIndex = 0;
+						});
+					}}
+				>
+					<option value="" disabled selected hidden>---Tỉnh/Thành phố---</option>
+					{#each location.provinces as province}
+						<option value={province.code}>{province.name}</option>
+					{/each}
+				</select>
+		
+				<select
+					name="type"
+					required
+					class="dui-select dui-select-sm dui-select-bordered w-full h-10"
+					bind:this={district}
+					disabled={location.districts.length == 0}
+					on:change={(e) => {
+						//@ts-ignore
+						districtCode = e.target.value;
+						ward.selectedIndex = 0;
+						getLocationData(LocationDepth.WARDS, provinceCode, districtCode).then((data) => {
+							location.wards = data;
+						});
+					}}
+				>
+					<option value="" disabled selected hidden>---Quận/Huyện---</option>
+					{#each location.districts as district}
+						<option value={district.code}>{district.name}</option>
+					{/each}
+				</select>
+		
+				<select
+					name="type"
+					required
+					class="dui-select dui-select-sm dui-select-bordered w-full h-10"
+					disabled={location.wards.length == 0}
+					bind:this={ward}
+				>
+					<option value="" disabled selected hidden>---Phường/Xã---</option>
+					{#each location.wards as ward}
+						<option value={ward.code}>{ward.name}</option>
+					{/each}
+				</select>
+			</div>
+			{/if}
 
 			<label class="dui-label pb-1" for="address">
 				<span class="dui-label-text required-label">Loại văn phòng</span>

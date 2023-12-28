@@ -19,6 +19,13 @@ export enum LocationDepth {
 	WARDS = 3
 }
 
+export interface Paginate {
+	totalPages: number;
+	totalItems: number;
+	perPage: number;
+	currentPage: number;
+}
+
 export interface LocationSchema {
 	name: string;
 	code: number;
