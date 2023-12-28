@@ -197,7 +197,7 @@
 								type="radio"
 								on:change={() => (role = Roles.TRANSACTION_LEADER)}
 								name={staff ? `role-radio-${staff.id}` : 'role-radio'}
-								class="dui-radio dui-radio-sm checked:bg-primary-500"
+								class="dui-radio dui-radio-sm checked:bg-secondary-500"
 								checked={role == Roles.TRANSACTION_LEADER}
 							/>
 							<span class="dui-label-text ml-2">Trưởng điểm giao dịch</span>
@@ -207,7 +207,7 @@
 								type="radio"
 								on:change={() => (role = Roles.GATHERING_LEADER)}
 								name={staff ? `role-radio-${staff.id}` : 'role-radio'}
-								class="dui-radio dui-radio-sm checked:bg-primary-500"
+								class="dui-radio dui-radio-sm checked:bg-secondary-500"
 								checked={role == Roles.GATHERING_LEADER}
 							/>
 							<span class="dui-label-text ml-2">Trưởng điểm tập kết</span>
@@ -227,7 +227,7 @@
 				</button>
 			</form>
 			<button
-				class="btn variant-filled bg-primary-600"
+				class="btn variant-filled bg-secondary-600"
 				class:animate-spin={loading}
 				disabled={loading}
 				on:click={() => (staff ? updateStaff(staff.id) : createNewStaff())}
