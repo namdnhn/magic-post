@@ -20,6 +20,7 @@ class PackageModel(database.Base):
     __tablename__ = "package"
 
     id = Column(BigInteger, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=True)
     name = Column(String(255), index=True)
     price = Column(Integer)
     description = Column(String(255))
@@ -46,6 +47,9 @@ class PackageModel(database.Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now())
     
+    package_status = relationship("PackageStatusModel", back_populates="package")
+    context_order = relationship("ContextOrderModel", back_populates="package")
+    
     
 class ContextOrderModel(database.Base):
     __tablename__ = "context_order"
@@ -58,6 +62,8 @@ class ContextOrderModel(database.Base):
     document_type = Column(String(255))
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now())
+    
+    package = relationship("PackageModel", back_populates="context_order")
     
 
 class PackageStatusModel(database.Base):
@@ -74,4 +80,6 @@ class PackageStatusModel(database.Base):
     delivered_time = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now())
+    
+    package = relationship("PackageModel", back_populates="package_status")
     
