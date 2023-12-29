@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import axiosInstance from '../../../axios';
+	import { token } from 'src/utils/stores';
 	// @ts-ignore
 	let access_token = '';
 	let error_messages = '';
@@ -31,6 +32,8 @@
 		}
 	}
 
+	token.set(access_token);
+
 	// @ts-ignore
 	let isLoginInputValid = [true, true];
 	let inputLoginValue = [
@@ -41,7 +44,7 @@
 	let showPassword = false;
 
 	// @ts-ignore
-	let invalidLoginMessages = ['Vui lòng nhập email.', 'The password cannot be less than 7 characters.'];
+	let invalidLoginMessages = ['Vui lòng nhập email.', 'Mật khẩu không được ít hơn 7 ký tự.'];
 
 	// @ts-ignore
 	// @ts-ignore
@@ -171,7 +174,7 @@ transform: translate(-50%, -50%);
 		</div>
 		<div class="rounded-t mb-0 px-6 py-6">
 			<div class="text-center mb-3">
-				<h3 class="text-blueGray-500 text-sm font-bold">Sign in with</h3>
+				<h3 class="text-blueGray-500 text-sm font-bold">Đăng nhập bằng</h3>
 			</div>
 			<div class="btn-wrapper text-center">
 				<button
@@ -193,7 +196,7 @@ transform: translate(-50%, -50%);
 		</div>
 		<div class="flex-auto px-4 lg:px-10 py-10 pt-0">
 			<div class="text-blueGray-400 text-center mb-8 font-bold">
-				<medium>Or sign in with credentials</medium>
+				<medium></medium>
 			</div>
 			<form>
 				{#each inputArrays as inputInformation, index}
@@ -245,7 +248,7 @@ transform: translate(-50%, -50%);
 							class="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
 							bind:checked={isRemember}
 						/>
-						<span class="ml-2 text-sm font-semibold text-blueGray-600"> Remember me </span>
+						<span class="ml-2 text-sm font-semibold text-blueGray-600"> Nhớ mật khẩu </span>
 					</label>
 				</div>
 				<div class="text-center mt-6">
@@ -254,14 +257,14 @@ transform: translate(-50%, -50%);
 						type="button"
 						on:click={handleSignIn}
 					>
-						Sign In
+						Đăng nhập
 					</button>
 				</div>
 			</form>
 			<div class="mt-5">
 				<i>
-					Don't have an account?
-					<span class="cursor-pointer underline" on:click={toggleMode}> Sign up now! </span>
+					Chưa có tài khoản khách hàng?
+					<span class="cursor-pointer underline" on:click={toggleMode}> Đăng ký ngay! </span>
 				</i>
 			</div>
 		</div>

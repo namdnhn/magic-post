@@ -10,6 +10,21 @@
 
 	initLazy();
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+	export let data: PageData;
+	$: data.role ;
+
+	let manageRoute: string;
+	$: manageRoute = data.role == Roles.ADMIN ? '/admin' : '/manage';
+	$: manageRoute = Roles.ADMIN ;
+
+	let roleName: string;
+	$: if(manageRoute == Roles.ADMIN ){
+		roleName = "Admin"
+	}
+	else{
+		roleName = "Nguyen Van A"
+	}
 </script>
 
 <header>
@@ -30,6 +45,22 @@
 				border="border-inherit"
 				class="w-full"
 			>
+			{#if !data.accessToken}
+				<TabAnchor href={manageRoute} class="ml-3">
+					<span class="link-nav flex"> Quản lý &nbsp;<FileText size={20} /></span>
+				</TabAnchor>
+				<TabAnchor href="/" class="ml-3 !p-0">
+					<div class="dui-dropdown dui-dropdown-hover dui-dropdown-bottom dui-dropdown-end">
+						<div tabindex="0" role="button">
+							<span class="link-nav flex py-2 px-4"> {roleName} &nbsp;<User2 size={20} /></span>
+						</div>
+
+					</div>
+				</TabAnchor>
+				<TabAnchor href="/logout" data-sveltekit-reload class="ml-3">
+					<span class="link-nav flex"> Đăng xuất &nbsp;<LogOut size={20} />  </span>
+				</TabAnchor>
+			{:else}
 				<TabAnchor href="/" class="ml-3">
 					<span class="link-nav flex"> Dịch vụ &nbsp;<Truck /> </span>
 				</TabAnchor>
@@ -42,7 +73,8 @@
 				<TabAnchor href="/login" class="ml-3">
 					<span class="link-nav flex"> Đăng nhập &nbsp;<User2 size={20} /></span>
 				</TabAnchor>
-			</TabGroup>
+			{/if}
+		</TabGroup>
 		</svelte:fragment>
 	</AppBar>
 </header>
