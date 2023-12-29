@@ -8,8 +8,9 @@
 
 	let orderData: Order[] = 
 		[{
+			category:"Hàng hóa",
 			orderId: 123,
-			mainCharge: 123,
+			mainCharge: "123",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -18,24 +19,24 @@
 				name: "name",
 				phoneNo: "0123456",
 				address: "address",
-				// transactionPoint: OfficesInterface,
+
 			},
-			// currentLocation: OfficesInterface,
 			toLocation: {
 				id: "id",
 				customerId: 123,
 				name: "name",
 				phoneNo: "0123456",
 				address: "address",
-				// transactionPoint: OfficesInterface,
+
 			},
-			// status: OrderStatus,
+
 		},
 		createAt: "HN",
 	},
 	{
 			orderId: 123,
-			mainCharge: 123,
+			mainCharge: "123",
+			category:"Hàng hóa",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -44,18 +45,18 @@
 				name: "name",
 				phoneNo: "0123456",
 				address: "address",
-				// transactionPoint: OfficesInterface,
+
 			},
-			// currentLocation: OfficesInterface,
+
 			toLocation: {
 				id: "id",
 				customerId: 123,
 				name: "name",
 				phoneNo: "0123456",
 				address: "address",
-				// transactionPoint: OfficesInterface,
+
 			},
-			// status: OrderStatus,
+
 		},
 		createAt: "HN",
 	}

@@ -6,9 +6,24 @@
     import { Check} from 'lucide-svelte';
 	export let data: PageServerData;
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	console.log('🚀 ~ file: +page.svelte:8 ~ data:', data);
 
 	let trackingOrder: string;
+
+	let loading: boolean = false;
+
+
+	const handleTrackingClick = () => {
+		loading = true;
+		const randomDelay = Math.random() * (2.5 - 1.5) + 1.5;
+		setTimeout(() => {
+		loading = false;
+		}, randomDelay * 1000);
+
+		
+		goto(`/tracking/${trackingOrder}`);
+  };
 </script>
 
 <div class="flex flex-col items-center w-full md:my-10">
@@ -22,10 +37,13 @@
 
             <button type="button" 
             class="btn variant-filled-secondary rounded-md w-1/5"
-            on:click={() => goto(`/tracking/${trackingOrder}`)}
+            on:click={handleTrackingClick}
             >Theo dõi</button>
 			
         </div>
+		{#if loading}
+			<Loading message="Đang lấy thông tin mới nhất" />
+		{:else}
 			<div class="flex flex-col w-full md:flex-row px-1">
 				<div class="">
 					<p class="text-secondary-500">Mã phiếu gửi</p>
@@ -37,7 +55,7 @@
 				<div class="">
 					<p class="text-secondary-500">Trạng thái</p>
 					{#if $page.params.id == "56789"}
-					   <b>Chuyển thành công </b> 
+					<b>Chuyển thành công </b> 
 					{:else}
 						<b>Đơn hàng không tồn tại </b> 	
 					{/if}
@@ -49,10 +67,11 @@
 				<p class="uppercase font-bold mb-2">Thông tin trạng thái</p>
 				{#if $page.params.id == "56789"}
 					<Tracking/>
-				 {:else}
-					 <b>Đơn hàng không tồn tại </b> 	
-			 	{/if}		
+				{:else}
+					<b>Đơn hàng không tồn tại </b> 	
+				{/if}		
 			</div>
+		{/if}	
 
 	</main>
 	<div class="trail-dash" />

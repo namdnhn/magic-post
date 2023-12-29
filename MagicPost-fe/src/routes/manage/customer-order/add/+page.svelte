@@ -38,9 +38,6 @@
 			<p class="title uppercase font-vn">Tạo đơn đặt hàng mới</p>
 		</div>
 		<div>
-			<button type="button" class="btn variant-filled" disabled>
-				<Eye size="20" class="mr-2" />Xem trước đơn hàng
-			</button>
 			<button type="button" 
 			class="btn variant-filled bg-[#2460E5]"
 			on:click={createCustomerOrder}
