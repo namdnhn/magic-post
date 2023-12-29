@@ -23,12 +23,12 @@
 			</span>
 		</div>
 		<div class="flex justify-end gap-3">
-			<div class="dui-tooltip dui-tooltip-bottom" data-tip="Xem chi tiết">
-				<button type="button" class="btn-icon variant-filled h-8 w-8">
+			<div class="dui-tooltip dui-tooltip-bottom bg-" data-tip="Xem chi tiết">
+				<button type="button" class="btn-icon variant-filled-secondary h-8 w-8">
 					<Eye size="16" />
 				</button>
 			</div>
-			<button type="button" class="btn-icon variant-filled h-8 w-8">
+			<button type="button" class="btn-icon variant-filled-error h-8 w-8">
 				<PencilLine size="16" />
 			</button>
 		</div>

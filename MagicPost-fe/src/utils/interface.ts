@@ -104,6 +104,7 @@ export interface Order {
 	orderId: number;
 	mainCharge: string;
 	category: string;
+	date:string;
 	orderDelivery: {
 		id: number;
 		fromLocation: {

@@ -38,19 +38,7 @@
 				<Boxes /><span class:hidden={!expand}>Đơn điểm tập kết</span>
 			</span>
 		</AppRailAnchor>
-		<TreeView
-			rounded="rounded-none"
-			open={isOpenTransport}
-			indent=""
-			regionSummary="flex-row-reverse gap-4"
-			hover="hover:bg-secondary-500/90"
-		>
-		<AppRailAnchor href="/manage/delivery" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={$page.url.pathname === '/manage/delivery'}>
-			<span class="pl-7 text-base flex gap-3" class:py-4={!expand}>
-				<Container  /> <span class:hidden={!expand}>Đơn giao hàng</span>
-			</span>
-		</AppRailAnchor>
-		</TreeView>
+
 	</AppRail>
 
 	<div class="p-6 flex-1 overflow-auto">

@@ -31,6 +31,10 @@
 		if (checks.every((v) => v == true) && checks.length == tableData.length) checkAll = true;
 		if (checks[i] == false && checkAll == true) checkAll = false;
 	}
+
+	const removeItem = (itemId: any) => {
+    tableData = tableData.filter(item => item.orderId !== itemId);
+  };
 </script>
 
 <div class="table-container !rounded-b-none !rounded-md h-full">
@@ -75,18 +79,16 @@
 							{i + 1}
 						</td>
 						<td>{row.orderId}</td>
-						<td>Loại hàng</td>
-						<td>999</td>
-						<td>
-							date
-						</td>
+						<td>{row.category}</td>
+						<td>{row.mainCharge} ₫</td>
+						<td>{row.date}</td>
 						{#if tab3 == false}
 							<td class="flex items-center gap-3">	
 								<div class="dui-tooltip dui-tooltip-bottom" data-tip="Chuyển">
 									<button
 									type="button"
 									class="btn-icon variant-filled h-8 w-8"
-									data-tip="Xóa"
+									on:click={() => removeItem(row.orderId)}
 								>
 									<ArrowRightFromLine size="16" />
 								</button>
