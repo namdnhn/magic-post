@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Tracking from 'src/components/Tracking.svelte';
+	import Tracking2 from 'src/components/Tracking2.svelte';
 	import type { PageServerData } from '../$types';
 	import Loading from 'src/components/Loading.svelte';
     import { Check} from 'lucide-svelte';
@@ -54,8 +55,10 @@
 
 				<div class="">
 					<p class="text-secondary-500">Trạng thái</p>
-					{#if $page.params.id == "56789"}
-					<b>Chuyển thành công </b> 
+					{#if $page.params.id == "16"}
+						<b>Chuyển thành công </b> 
+					{:else if $page.params.id == "10"}
+						<b>Chuyển thất bại </b> 
 					{:else}
 						<b>Đơn hàng không tồn tại </b> 	
 					{/if}
@@ -65,8 +68,10 @@
 			<div>
 				<div class="dui-divider m-0" />
 				<p class="uppercase font-bold mb-2">Thông tin trạng thái</p>
-				{#if $page.params.id == "56789"}
+				{#if $page.params.id == "16"}
 					<Tracking/>
+				{:else if $page.params.id == "10"}
+					<Tracking2/>
 				{:else}
 					<b>Đơn hàng không tồn tại </b> 	
 				{/if}		

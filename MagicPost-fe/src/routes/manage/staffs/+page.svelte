@@ -10,38 +10,38 @@
     const tableData: StaffsInteface[] = [
         {
             id: "",
-            userId: "12345",
+            userId: "26",
             address: "",
             email: "",
-            fullName: "Nguyen Van A",
+            fullName: "Nguyễn Cao Đức",
             phoneNo: "",
             dateOfBirth: "",
             role: {
                 id: Roles.GATHERS_STAFF,
-                name: "Nhân viên điểm tập kết",
-            },
-            workAt: {
-                id: "",
-                pointId: "",
-                name: "Điểm tập kết 1",
-            },
-        },
-        {
-            id: "",
-            userId: "23456",
-            address: "",
-            email: "",
-            fullName: "Nguyen Van B",
-            phoneNo: "",
-            dateOfBirth: "",
-            role: {
-                id: Roles.TRANSACTION_STAFF,
                 name: "Nhân viên điểm giao dịch",
             },
             workAt: {
                 id: "",
                 pointId: "",
-                name: "Điểm giao dịch 1",
+                name: "ĐGD Xuân Thủy",
+            },
+        },
+        {
+            id: "",
+            userId: "27",
+            address: "",
+            email: "",
+            fullName: "Dương Hoàng Hải",
+            phoneNo: "",
+            dateOfBirth: "",
+            role: {
+                id: Roles.GATHERS_STAFF,
+                name: "Nhân viên điểm giao dịch",
+            },
+            workAt: {
+                id: "",
+                pointId: "",
+                name: "ĐGD Xuân Thủy",
             },
         },
     ]
@@ -49,8 +49,6 @@
 
     onMount(() => {
         console.log(data.streamed?.staffs);
-        console.log(data.streamed?.transaction_staffs);
-        console.log(data.streamed?.gathering_staffs);
     })
 	function showStaffModal() {
 		(document.getElementById('manager_new_staff') as any).showModal();

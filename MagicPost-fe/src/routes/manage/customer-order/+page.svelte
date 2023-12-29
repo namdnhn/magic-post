@@ -8,8 +8,8 @@
 	let orderData: Order[] = 
 		[
 			{
-			orderId: 2089,
-			mainCharge: "90.000",
+			orderId: 2009,
+			mainCharge: "30.000",
 			category:"Hàng hóa",
 			date: "18/09/2023",
 			orderDelivery: {
@@ -32,8 +32,8 @@
 		createAt: "HN",
 	},
 	{
-			orderId: 2088,
-			mainCharge: "100.000",
+			orderId: 2008,
+			mainCharge: "31.000",
 			category:"Hàng hóa",
 			date: "18/09/2023",
 			orderDelivery: {
@@ -57,8 +57,8 @@
 		createAt: "HN",
 	},
 	{
-			orderId: 2087,
-			mainCharge: "80.000",
+			orderId: 2007,
+			mainCharge: "30.000",
 			category:"Tài liệu",
 			date: "18/09/2023",
 			orderDelivery: {
@@ -81,7 +81,7 @@
 		createAt: "HN",
 	},
 	{
-			orderId: 2087,
+			orderId: 2006,
 			mainCharge: "30.000",
 			category:"Tài liệu",
 			date: "18/09/2023",
@@ -105,8 +105,8 @@
 		createAt: "HN",
 	},
 	{
-			orderId: 2087,
-			mainCharge: "70.000",
+			orderId: 2005,
+			mainCharge: "27.000",
 			category:"Tài liệu",
 			date: "18/09/2023",
 			orderDelivery: {
@@ -129,8 +129,8 @@
 		createAt: "HN",
 	},
 	{
-			orderId: 2087,
-			mainCharge: "80.000",
+			orderId: 2004,
+			mainCharge: "27.000",
 			category:"Tài liệu",
 			date: "18/09/2023",
 			orderDelivery: {

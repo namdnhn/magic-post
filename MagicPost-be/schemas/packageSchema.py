@@ -7,6 +7,7 @@ class PackageType(str, Enum):
     GOODS = "goods"
 
 class PackageBase(BaseModel):
+    user_id: int = None
     name: str
     price: int
     description: str
@@ -26,7 +27,7 @@ class PackageBase(BaseModel):
     receiver_ward_code: int
     receiver_address: str
     weight: float = 0.0
-    package_type: PackageType = PackageType.GOODS
+    type: PackageType = PackageType.GOODS
 
 class PackageCreate(PackageBase):
     pass
@@ -44,6 +45,7 @@ class ContextOrderBase(BaseModel):
     context: str
     quantity: int
     value: int
+    document_type: str
 
 class ContextOrderCreate(ContextOrderBase):
     pass

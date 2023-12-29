@@ -178,7 +178,7 @@
 				</div>
 			</div>
 
-			{#if showSelectRole}
+			<!-- {#if showSelectRole}
 				<label class="dui-label pb-1" for="role-radio">
 					<span class="dui-label-text required-label">Chức vụ</span>
 				</label>
@@ -214,7 +214,7 @@
 						</label>
 					</div>
 				{/if}
-			{/if}
+			{/if} -->
 		</main>
 		<div class="dui-divider m-0 -mx-6" class:mt-2={!showSelectRole} />
 		{#if error}

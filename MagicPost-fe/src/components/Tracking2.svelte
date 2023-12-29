@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BaggageClaim, Blocks, Check, ClipboardList, MapPin, Plane, Truck } from 'lucide-svelte';
+	import { BaggageClaim, Blocks, XCircle, Check, ClipboardList, MapPin, Plane, Truck } from 'lucide-svelte';
 </script>
 
 <ul>
@@ -9,16 +9,16 @@
 		<div class="flex">
 			<div class="flex">
 				<div class="flex flex-col items-center">
-					<div class="tracking-icon tracking-icon-success">
-						<Check class="w-5 h-5" />
+					<div class="tracking-icon tracking-icon-fail">
+						<XCircle class="w-5 h-5" />
 					</div>
 					<div class="tracking-hr grow" />
 				</div>
-				<div class="mx-5 mt-1">09:20 29-12-2023</div>
+				<div class="mx-5 mt-1">10:15 26-12-2023</div>
 			</div>
 			<div class="mt-1">
-				<div class="tracking-text-success"><strong>Đã giao</strong></div>
-				<div class="tracking-text-success">Đơn hàng đã được giao thành công tới khách hàng</div>
+				<div class="tracking-text-fail"><strong>Thất bại</strong></div>
+				<div class="tracking-text-fail">Lý do: Khách từ chối nhận hàng</div>
 			</div>
 		</div>
 
@@ -35,7 +35,7 @@
 					</div>
 					<div class="tracking-hr grow" />
 				</div>
-				<div class="mx-5 mt-1">07:20 29-12-2023</div>
+				<div class="mx-5 mt-1">07:06 26-12-2023</div>
 			</div>
 			<div class="mt-1">
 				<div><strong>Đang giao hàng</strong></div>
@@ -59,10 +59,10 @@
 					</div>
 					<div class="tracking-hr grow" />
 				</div>
-				<div class="mx-5 mt-1">21:20 28-12-2023</div>
+				<div class="mx-5 mt-1">21:09 25-12-2023</div>
 			</div>
 			<div class="mt-1">
-				<div><strong>Đã đến ĐGD An Ninh TH TB</strong></div>
+				<div><strong>Đã đến ĐGD Lương Thế Vinh</strong></div>
 				<div class="tracking-text-pending">Đơn hàng đã đến nơi</div>
 			</div>
 		</div>
@@ -83,10 +83,10 @@
 					</div>
 					<div class="tracking-hr grow" />
 				</div>
-				<div class="mx-5 mt-1">15:30 27-12-2023</div>
+				<div class="mx-5 mt-1">20:24 24-12-2023</div>
 			</div>
 			<div class="mt-1">
-				<div><strong>Đã đến ĐTK Tiền Hải Thái Bình</strong></div>
+				<div><strong>Đã đến ĐTK Thanh Xuân Bắc</strong></div>
 				<div class="tracking-text-pending">Đơn hàng đã đến nơi</div>
 			</div>
 		</div>
@@ -107,10 +107,10 @@
 					</div>
 					<div class="tracking-hr grow" />
 				</div>
-				<div class="mx-5 mt-1">20:18 26-12-2023</div>
+				<div class="mx-5 mt-1">12:03 24-12-2023</div>
 			</div>
 			<div class="mt-1">
-				<div><strong>Đã đến ĐTK Dịch Vọng Hậu Cầu Giấy HN</strong></div>
+				<div><strong>Đã đến ĐTK Thanh Oai 1</strong></div>
 				<div class="tracking-text-pending">Đơn hàng đã đến nơi</div>
 			</div>
 		</div>
@@ -131,10 +131,10 @@
 					</div>
 					<div class="tracking-hr grow" />
 				</div>
-				<div class="mx-5 mt-1">13:20 25-12-2023</div>
+				<div class="mx-5 mt-1">16:36 23-12-2023</div>
 			</div>
 			<div class="mt-1">
-				<div><strong>Đã đến ĐGD Xuân Thủy</strong></div>
+				<div><strong>Đã đến ĐGD Tả Thanh Oai</strong></div>
 				<div class="tracking-text-pending">Đơn hàng đã đến nơi</div>
 			</div>
 		</div>
@@ -154,11 +154,11 @@
 						<ClipboardList class="w-5 h-5" />
 					</div>
 				</div>
-				<div class="mx-5 mt-1">13:20 25-12-2023</div>
+				<div class="mx-5 mt-1">16:36 23-12-2023</div>
 			</div>
 			<div class="mt-1">
 				<div><strong>Nhận thành công</strong></div>
-				<div class="tracking-text-pending">Đơn hàng đã được nhận tại ĐGD Xuân Thủy</div>
+				<div class="tracking-text-pending">Đơn hàng đã được nhận tại ĐGD Tả Thanh Oai</div>
 			</div>
 		</div>
 	</li>
@@ -187,9 +187,17 @@
 		border: none;
 		color: white;
 	}
+    .tracking-icon-fail {
+		background-color: red;
+		border: none;
+		color: white;
+	}
 	.tracking-text-success {
 		color: #26ab9a;
 	}
+    .tracking-text-fail {
+        color: red;
+    }
 	.tracking-link-image {
 		color: rgb(59, 130, 246);
 	}

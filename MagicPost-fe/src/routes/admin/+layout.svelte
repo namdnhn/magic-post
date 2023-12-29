@@ -15,7 +15,7 @@
 		</AppRailTile>
 
 		<!-- --- -->
-		<AppRailAnchor href="/admin" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={$page.url.pathname === '/admin'}>
+		<AppRailAnchor href="/admin/statistic" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={$page.url.pathname === '/admin'}>
 			<span class="pl-7 text-base flex gap-3" class:py-4={!expand}>
 				<AreaChart /> <span class:hidden={!expand}>Thống kê</span>
 			</span>

@@ -6,5 +6,5 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	cookies.delete('token');
 	token.set('');
 
-	throw redirect(302, '/');
+	throw redirect(302, '/login');
 };

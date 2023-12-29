@@ -7,37 +7,10 @@
 	let tab3: boolean = false;
 
 	let orderData1: Order[] = 
-		[{
-			category:"Hàng hóa",
-			orderId: 2089,
-			mainCharge: "90.000",
-			date: "18/09/2023",
-			orderDelivery: {
-			id: 123,
-			fromLocation: {
-				id: "id",
-				customerId: 123,
-				name: "name",
-				phoneNo: "0123456",
-				address: "address",
-
-			},
-			toLocation: {
-				id: "id",
-				customerId: 123,
-				name: "name",
-				phoneNo: "0123456",
-				address: "address",
-
-			},
-
-		},
-		createAt: "HN",
-	},
-	{
+		[	{
 			orderId: 2087,
-			mainCharge: "100.000",
-			date: "22/06/2023",
+			mainCharge: "35.000",
+			date: "27/12/2023",
 			category:"Tài liệu",
 			orderDelivery: {
 			id: 123,
@@ -65,8 +38,8 @@
 	,
 	{
 			orderId: 2086,
-			mainCharge: "100.000",
-			date: "06/06/2023",
+			mainCharge: "35.000",
+			date: "28/12/2023",
 			category:"Tài liệu",
 			orderDelivery: {
 			id: 123,
@@ -94,8 +67,8 @@
 	,
 	{
 			orderId: 2085,
-			mainCharge: "100.000",
-			date: "02/06/2023",
+			mainCharge: "35.000",
+			date: "28/12/2023",
 			category:"Tài liệu",
 			orderDelivery: {
 			id: 123,
@@ -122,8 +95,8 @@
 	,
 	{
 			orderId: 2084,
-			mainCharge: "100.000",
-			date: "16/05/2023",
+			mainCharge: "33.000",
+			date: "27/12/2023",
 			category:"Hàng hóa",
 			orderDelivery: {
 			id: 123,
@@ -153,8 +126,8 @@ let orderData2: Order[] =
 		[{
 			category:"Hàng hóa",
 			orderId: 2089,
-			mainCharge: "90.000",
-			date: "18/09/2023",
+			mainCharge: "30.000",
+			date: "28/12/2023",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -180,8 +153,8 @@ let orderData2: Order[] =
 			{
 			category:"Hàng hóa",
 			orderId: 7198,
-			mainCharge: "80.000",
-			date: "05/08/2023",
+			mainCharge: "38.000",
+			date: "26/12/2023",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -206,9 +179,9 @@ let orderData2: Order[] =
 	},
 	{
 			orderId: 1782,
-			mainCharge: "90.000",
+			mainCharge: "29.000",
 			category:"Tài liệu",
-			date: "01/07/2023",
+			date: "26/12/2023",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -234,8 +207,8 @@ let orderData2: Order[] =
 	}	,
 	{
 			orderId: 3716,
-			mainCharge: "100.000",
-			date: "02/06/2023",
+			mainCharge: "30.000",
+			date: "26/12/2023",
 			category:"Hàng hóa",
 			orderDelivery: {
 			id: 123,
@@ -262,8 +235,8 @@ let orderData2: Order[] =
 	,
 	{
 			orderId: 6250,
-			mainCharge: "100.000",
-			date: "16/05/2023",
+			mainCharge: "31.000",
+			date: "26/12/2023",
 			category:"Hàng hóa",
 			orderDelivery: {
 			id: 123,
@@ -291,9 +264,9 @@ let orderData2: Order[] =
 	,
 			{
 			category:"Hàng hóa",
-			orderId: 7198,
-			mainCharge: "80.000",
-			date: "05/08/2023",
+			orderId: 4135,
+			mainCharge: "31.000",
+			date: "26/12/2023",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -317,10 +290,10 @@ let orderData2: Order[] =
 		createAt: "HN",
 	},
 	{
-			orderId: 1782,
-			mainCharge: "90.000",
+			orderId: 1569,
+			mainCharge: "29.000",
 			category:"Tài liệu",
-			date: "09/04/2023",
+			date: "26/12/2023",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -346,10 +319,10 @@ let orderData2: Order[] =
 	}
 	,
 	{
-			orderId: 1782,
-			mainCharge: "90.000",
+			orderId: 1787,
+			mainCharge: "35.000",
 			category:"Tài liệu",
-			date: "19/03/2023",
+			date: "26/12/2023",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -375,10 +348,10 @@ let orderData2: Order[] =
 	}
 	,
 	{
-			orderId: 1782,
-			mainCharge: "90.000",
+			orderId: 1280,
+			mainCharge: "35.000",
 			category:"Tài liệu",
-			date: "07/01/2023",
+			date: "27/12/2023",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -407,8 +380,8 @@ let orderData3: Order[] =
 		[{
 			category:"Hàng hóa",
 			orderId: 2089,
-			mainCharge: "90.000",
-			date: "18/09/2023",
+			mainCharge: "30.000",
+			date: "28/12/2023",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -434,7 +407,7 @@ let orderData3: Order[] =
 			{
 			category:"Hàng hóa",
 			orderId: 689,
-			mainCharge: "150.000",
+			mainCharge: "35.000",
 			date: "18/09/2023",
 			orderDelivery: {
 			id: 123,
@@ -460,7 +433,7 @@ let orderData3: Order[] =
 	},
 	{
 			orderId: 397,
-			mainCharge: "200.000",
+			mainCharge: "32.000",
 			category:"Hàng hóa",
 			date: "11/10/2023",
 			orderDelivery: {
@@ -503,7 +476,7 @@ let orderData3: Order[] =
 	<h3 class="h3 uppercase mb-3">Danh sách đơn tập kết </h3>
 	<div class="logo-cloud grid-cols-2 gap-12 w-full h-[12vh] [&>.logo-item]:bg-secondary-400 items-center text-center [&>.logo-item]:text-secondary-50">
 		<div class="logo-item text-2xl card-hover text-center">
-			<p>Số đơn đến: 5</p>
+			<p>Số đơn đến: 4</p>
 		</div>
 		<div class="logo-item text-2xl card-hover">
 			<div>Số đơn đi: 3</div>

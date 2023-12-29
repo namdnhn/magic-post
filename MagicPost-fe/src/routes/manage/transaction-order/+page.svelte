@@ -10,13 +10,13 @@
 		[{
 			category:"Hàng hóa",
 			orderId: 2089,
-			mainCharge: "90.000",
+			mainCharge: "30.000",
 			date: "18/09/2023",
 			gatherPoint: "ĐTK Cầu Giấy"
 	},
 	{
 			orderId: 2087,
-			mainCharge: "100.000",
+			mainCharge: "31.000",
 			date: "22/06/2023",
 			category:"Tài liệu",
 			gatherPoint: "ĐTK Đống Đa"
@@ -50,13 +50,13 @@ let orderData2: OrderTransaction[] =
 		[{
 			category:"Hàng hóa",
 			orderId: 2089,
-			mainCharge: "90.000",
+			mainCharge: "30.000",
 			date: "18/09/2023",
 			gatherPoint: "ĐTK Cầu Giấy"
 	},
 	{
 			orderId: 2087,
-			mainCharge: "100.000",
+			mainCharge: "31.000",
 			date: "22/06/2023",
 			category:"Tài liệu",
 			gatherPoint: "ĐTK Đống Đa"
@@ -87,7 +87,7 @@ let orderData2: OrderTransaction[] =
 	},
 	{
 			orderId: 9405,
-			mainCharge: "100.000",
+			mainCharge: "31.000",
 			date: "22/06/2023",
 			category:"Tài liệu",
 			gatherPoint: "ĐTK Đống Đa"
@@ -95,7 +95,7 @@ let orderData2: OrderTransaction[] =
 	,
 	{
 			orderId: 7198,
-			mainCharge: "100.000",
+			mainCharge: "31.000",
 			date: "06/06/2023",
 			category:"Tài liệu",
 			gatherPoint: "ĐTK Hoàn Kiếm"
@@ -103,7 +103,7 @@ let orderData2: OrderTransaction[] =
 	,
 	{
 			orderId: 1782,
-			mainCharge: "100.000",
+			mainCharge: "31.000",
 			date: "02/06/2023",
 			category:"Tài liệu",
 			gatherPoint: "ĐTK Long Biên"

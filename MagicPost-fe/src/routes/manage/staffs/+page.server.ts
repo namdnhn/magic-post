@@ -1,28 +1,6 @@
-import { lazyLoad } from 'src/lib/lazyLoad';
 import { mergeQueries } from 'src/utils/helper';
 import type { PageServerLoad } from './$types';
 import axiosInstance from 'src/axios';
-
-interface TransactionStaffs {
-	transaction_staffs: {
-		data: any[];
-		status: number;
-	};
-}
-
-interface GatheringStaffs {
-	gathering_staffs: {
-		data: any[];
-		status: number;
-	};
-}
-
-interface Staffs {
-	staffs: {
-		data: any[];
-		status: number;
-	};
-}
 
 export const load: PageServerLoad = async ({ parent, fetch, url }) => {
 	await parent();
@@ -39,21 +17,11 @@ export const load: PageServerLoad = async ({ parent, fetch, url }) => {
 			})
 		);
 
-		const staffs = await lazyLoad<Staffs>(axiosInstance.get(`/manage/all_staffs/`).then((res) => res.data));
-
-		const transaction_staffs = await lazyLoad<TransactionStaffs>(
-			axiosInstance.get(`/manage/transaction_staffs/`).then((res) => res.data)
-		);
-
-		const gathering_staffs = await lazyLoad<GatheringStaffs>(
-			axiosInstance.get(`/manage/gathering_staffs/`).then((res) => res.data)
-		);
+		const staffs = await axiosInstance.get(`/manage/all_staffs`).then((res) => res.data);
 
 		return {
 			streamed: {
-				staffs: staffs,
-				transaction_staffs: transaction_staffs,
-				gathering_staffs: gathering_staffs
+				staffs: staffs
 			}
 		};
 	} catch (err) {

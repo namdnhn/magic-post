@@ -23,21 +23,21 @@
 				<Users /> <span class:hidden={!expand}>Nhân viên</span>
 			</span>
 		</AppRailAnchor>
-		<AppRailAnchor href="/manage/customer-order" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={isOpenCustomerOrder}>
+		<!-- <AppRailAnchor href="/manage/customer-order" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={isOpenCustomerOrder}>
 			<span class="pl-7 text-base flex gap-3" class:py-4={!expand}>
 				<Package /> <span class:hidden={!expand}>Đơn đặt hàng</span>
 			</span>
-		</AppRailAnchor>
+		</AppRailAnchor> -->
 		<AppRailAnchor href="/manage/transaction-order" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={$page.url.pathname === '/manage/transaction-order'}>
 			<span class="pl-7 text-base flex gap-3" class:py-4={!expand}>
 				<ScrollText /> <span class:hidden={!expand}>Đơn điểm giao dịch</span>
 			</span>
 		</AppRailAnchor>
-		<AppRailAnchor href="/manage/gathering-order" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={$page.url.pathname === '/manage/gathering-order'}>
+		<!-- <AppRailAnchor href="/manage/gathering-order" hover="hover:bg-secondary-500/90" active="bg-secondary-500" selected={$page.url.pathname === '/manage/gathering-order'}>
 			<span class="pl-7 text-base flex gap-3" class:py-4={!expand}>
 				<Boxes /><span class:hidden={!expand}>Đơn điểm tập kết</span>
 			</span>
-		</AppRailAnchor>
+		</AppRailAnchor> -->
 
 	</AppRail>
 

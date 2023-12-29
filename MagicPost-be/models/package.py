@@ -42,7 +42,6 @@ class PackageModel(database.Base):
     receiver_ward_code = Column(Integer)
     receiver_address = Column(String(255))
     weight = Column(Float, default=0.0)
-    price = Column(Integer)
     type = Column(Enum(PackageType), default=PackageType.GOODS)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now())

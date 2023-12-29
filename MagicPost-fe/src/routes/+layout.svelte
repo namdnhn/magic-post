@@ -14,6 +14,8 @@
 	export let data: PageData;
 	$: data.role ;
 
+	let login: boolean = false;
+
 	let manageRoute: string;
 	$: manageRoute = data.role == Roles.ADMIN ? '/admin' : '/manage';
 	$: manageRoute = Roles.ADMIN ;
@@ -23,7 +25,7 @@
 		roleName = "Admin"
 	}
 	else{
-		roleName = "Nguyen Van A"
+		roleName = "Transaction Leader 01"
 	}
 </script>
 
@@ -45,10 +47,13 @@
 				border="border-inherit"
 				class="w-full"
 			>
-			{#if data.accessToken}
-				<TabAnchor href={manageRoute} class="ml-3">
+			{#if !login}
+				<!-- <TabAnchor href={manageRoute} class="ml-3">
 					<span class="link-nav flex"> Quản lý &nbsp;<FileText size={20} /></span>
-				</TabAnchor>
+				</TabAnchor> -->
+				<!-- <TabAnchor href="/tracking" class="ml-3">
+					<span class="link-nav flex"> Theo dõi &nbsp;<MapPin size={20} /></span>
+				</TabAnchor> -->
 				<TabAnchor href="/" class="ml-3 !p-0">
 					<div class="dui-dropdown dui-dropdown-hover dui-dropdown-bottom dui-dropdown-end">
 						<div tabindex="0" role="button">
