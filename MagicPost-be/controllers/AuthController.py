@@ -12,6 +12,7 @@ from schemas.userSchema import (
     RegisterUser,
     Login,
     UpdateUser,
+    PreparingLeader
 )
 from dotenv import load_dotenv
 import os
@@ -98,6 +99,19 @@ class AuthController:
     
     def getAllUser(db: Session):
         return db.query(UserModel).all()
+    
+    def getUsersNotLeader(db: Session):
+        user_list = db.query(UserModel).filter(UserModel.role == "customer").all()
+        res = []
+        for user in user_list:
+            user_details = user.user_detail[0]
+            new_user = PreparingLeader(
+                user_id= user.id,
+                email = user.email,
+                fullname = user_details.fullname,
+            )
+            res.append(new_user)
+        return res
 
     def getUserByEmail(email: str, db: Session = Depends(getDatabase)):
         return db.query(UserModel).filter(UserModel.email == email).first()

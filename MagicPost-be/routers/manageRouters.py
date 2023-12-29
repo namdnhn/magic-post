@@ -61,6 +61,10 @@ async def get_all_transaction_leaders(db: Session = Depends(getDatabase)):
 async def get_all_transaction_staffs(db: Session = Depends(getDatabase)):
     return ManageController.getAllTransactionStaffs(db)
 
+@router.get("/all_staffs/", response_model=List[Staff])
+async def get_all_staffs(db: Session = Depends(getDatabase)):
+    return ManageController.getAllStaffs(db)
+
 @router.post("/gathering_point/")
 async def create_gathering_point(gathering_point: GatheringPointCreate, db: Session = Depends(getDatabase)):
     return ManageController.createGatheringPoint(gathering_point, db)

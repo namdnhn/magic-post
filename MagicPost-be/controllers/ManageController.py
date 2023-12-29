@@ -9,6 +9,7 @@ from models.manage import (
     GatheringPointModel,
     TransactionPointModel,
 )
+from models.user import Roles as UserRoles
 from schemas.manageSchema import (
     GatheringLeader,
     GatheringStaff,
@@ -274,6 +275,11 @@ class ManageController:
             staffs.append(new_staff)
         return staffs
 
+    def getAllStaffs(db: Session):
+        gathering_staffs = ManageController.getAllGatheringStaffs(db)
+        transaction_staffs = ManageController.getAllTransactionStaffs(db)
+        return gathering_staffs + transaction_staffs
+    
     def createGatheringPoint(gathering_point: GatheringPointCreate, db: Session):
         new_gathering_point = GatheringPointModel(name=gathering_point.name)
         db.add(new_gathering_point)
@@ -419,8 +425,8 @@ class ManageController:
         return new_transaction_leader
     
     def createGatheringPointByCurrentUser(gathering_point: GatheringPointCreateByCurrentUser, db: Session):
-        user_id = AuthController.getUserIdByEmail(gathering_point.user_email, db)
-        if user_id is None:
+        user = AuthController.getUserByEmail(gathering_point.user_email, db)
+        if user is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"User not found",
@@ -434,17 +440,19 @@ class ManageController:
         db.commit()
         db.refresh(new_gathering_point)
         new_gathering_leader = GatheringLeaderModel(
-            user_id=user_id,
+            user_id=user.id,
             gathering_point_id=new_gathering_point.id,
         )
+        user.role = UserRoles.GATHERING_LEADER
         db.add(new_gathering_leader)
         db.commit()
         db.refresh(new_gathering_leader)
         return new_gathering_point
     
     def createTransactionPointByCurrentUser(transaction_point: TransactionPointCreateByCurrentUser, db: Session):
-        user_id = AuthController.getUserIdByEmail(transaction_point.user_email, db)
-        if user_id is None:
+        user = AuthController.getUserByEmail(transaction_point.user_email, db)
+        if user is None:
+            print("User not found")
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"User not found",
@@ -462,9 +470,10 @@ class ManageController:
         db.commit()
         db.refresh(new_transaction_point)
         new_transaction_leader = TransactionLeaderModel(
-            user_id=user_id,
+            user_id=user.id,
             transaction_point_id=new_transaction_point.id,
         )
+        user.role = UserRoles.TRANSACTION_LEADER
         db.add(new_transaction_leader)
         db.commit()
         db.refresh(new_transaction_leader)

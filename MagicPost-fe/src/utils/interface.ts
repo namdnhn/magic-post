@@ -45,6 +45,12 @@ export interface LocationSchema {
 	code: number;
 }
 
+export interface CustomerInterface {
+	user_id: number;
+	email: string;
+	fullname: string;
+}
+
 export interface StaffsInteface {
 	id: string;
 	userId: string;

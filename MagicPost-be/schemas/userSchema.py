@@ -48,3 +48,8 @@ class UpdateUser(ConfirmPassword):
     phone: Optional[str] = None
     image_path: Optional[str] = None
     address: Optional[str] = None
+    
+class PreparingLeader(BaseModel):
+    user_id: int
+    email: str
+    fullname: str

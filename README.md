@@ -10,7 +10,7 @@
 - Cài đặt các dependencies cho môi trường ảo: ```pip install -r requirements.txt```
 - Di chuyển lại vào thư mục backend: ```cd MagicPost-be``` rồi chạy server trong local (di chuyển vào thư mục chứa file main.py): ```uvicorn main:app --reload```
 - Khi không cần dùng môi trường ảo nữa, có thể tắt kích hoạt môi trường ảo: ```deactivate```
-- Muốn test API, vui lòng sử dụng đường link: ```http://localhost:8000/#docs```
+- Muốn test API, vui lòng sử dụng đường link: ```http://localhost:8000/docs```
 ## Hướng dẫn cài đặt môi trường cho front-end
 - di chuyển vào thư mục front-end: ```cd MagicPost-fe```
 - Cài đặt môi trường cho front-end: ```npm install```
