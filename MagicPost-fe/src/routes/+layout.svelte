@@ -45,7 +45,7 @@
 				border="border-inherit"
 				class="w-full"
 			>
-			{#if !data.accessToken}
+			{#if data.accessToken}
 				<TabAnchor href={manageRoute} class="ml-3">
 					<span class="link-nav flex"> Quản lý &nbsp;<FileText size={20} /></span>
 				</TabAnchor>

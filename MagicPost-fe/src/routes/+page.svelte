@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { TabGroup, Tab, TabAnchor } from '@skeletonlabs/skeleton';
 	import { Mail , Landmark , Truck } from 'lucide-svelte';
+	import { goto } from '$app/navigation';
 	
 	const services = [
 		{
@@ -29,7 +30,7 @@
 		}
 	];
 	let tabSet: number = 0;
-
+	let trackingOrder: string;
 </script>
 
 <main>
@@ -64,8 +65,14 @@
 			<svelte:fragment slot="panel">
 				{#if tabSet === 0}
 					<div class="w-full p-3 bg-surface-200 rounded-md flex gap-5">
-						<input type="text" placeholder="Mã đơn" class="dui-input dui-input-bordered dui-input-lg w-full"/>
-						<button type="button" class="btn variant-filled-secondary rounded-md w-1/5">Theo dõi</button>
+						<input type="text" placeholder="Mã đơn" 
+						class="dui-input dui-input-bordered dui-input-lg w-full"
+						bind:value={trackingOrder}
+						/>
+						<button type="button" 
+						class="btn variant-filled-secondary rounded-md w-1/5"
+						on:click={() => goto(`/tracking/${trackingOrder}`)}
+						>Theo dõi</button>
 					</div>
 				{:else if tabSet === 1}
 					<div class="logo-cloud grid-cols-3 gap-2 w-full h-[60vh] [&>.logo-item]:bg-secondary-400">
