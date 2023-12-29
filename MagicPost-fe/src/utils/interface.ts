@@ -102,7 +102,8 @@ export interface TransactionOrderInteface {
 
 export interface Order {
 	orderId: number;
-	mainCharge: number;
+	mainCharge: string;
+	category: string;
 	orderDelivery: {
 		id: number;
 		fromLocation: {

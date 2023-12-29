@@ -13,10 +13,10 @@
 		<div class="flex">
 			<div class="invoice-cell w-[50%]">
 				<p><strong>1. Họ tên địa chỉ người gửi:</strong></p>
-				<p>Nguyễn Văn A</p>
-				<p>144 Xuân Thủy, quận Cầu Giấy - TP Hà Nội</p>
+				<p>Đỗ Nhữ Hoàng Nam</p>
+				<p>144 Xuân Thủy, Cầu Giấy, Hà Nội</p>
 				<div class="h-[1rem]" />
-				<p><strong>Điện thoại:</strong> 0123456789</p>
+				<p><strong>Điện thoại:</strong> 0987654321</p>
 				<div class="flex">
 					<div class="w-[50%]"><strong>Mã khách hàng:</strong></div>
 					<div class="w-[50%]"><strong>Mã bưu chính:</strong> 10179</div>
@@ -24,12 +24,12 @@
 			</div>
 			<div class="invoice-cell w-[50%]">
 				<p><strong>2. Họ tên địa chỉ người nhận:</strong></p>
-				<p>Nguyễn Văn B</p>
-				<p>144 đường Xuân Thủy, quận Cầu Giấy, Hà Nội</p>
+				<p>Đặng Minh Khôi</p>
+				<p>1 Đặng Tiến Đông</p>
 				<div class="h-[1rem]" />
 				<p><strong>Mã ĐH:</strong></p>
 				<div class="flex">
-					<div class="w-[50%]"><strong>Điện thoại:</strong> 0987654321</div>
+					<div class="w-[50%]"><strong>Điện thoại:</strong> 0123456789</div>
 					<div class="w-[50%]"><strong>Mã bưu chính:</strong> 01089</div>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 							<label class="ml-0.5" for="document">Tài liệu</label>
 						</div>
 						<div class="flex w-[50%] justify-center">
-							<input type="checkbox" name="goods" id="goods" />
+							<input type="checkbox" name="goods" id="goods" checked  />
 							<label class="ml-0.5" for="goods">Hàng hóa</label>
 						</div>
 					</div>
@@ -61,7 +61,7 @@
 						<tbody>
 							<tr>
 								<td class="td-border-left-none">Tổng</td>
-								<td>0</td>
+								<td>30</td>
 								<td />
 								<td class="td-border-right-none" />
 							</tr>

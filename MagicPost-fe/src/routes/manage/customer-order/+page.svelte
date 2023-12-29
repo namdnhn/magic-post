@@ -6,35 +6,34 @@
 	import ListOrder from 'src/components/ListOrder.svelte';
 
 	let orderData: Order[] = 
-		[{
-			orderId: 123,
-			mainCharge: 123,
+		[
+			{
+			orderId: 2089,
+			mainCharge: "90.000",
+			category:"Hàng hóa",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
 				id: "id",
 				customerId: 123,
-				name: "name",
-				phoneNo: "0123456",
-				address: "address",
-				// transactionPoint: OfficesInterface,
+				name: "Đỗ Nhữ Hoàng Nam",
+				phoneNo: "0987654321",
+				address: "144 Xuân Thủy, Cầu Giấy, Hà Nội",
 			},
-			// currentLocation: OfficesInterface,
 			toLocation: {
 				id: "id",
 				customerId: 123,
-				name: "name",
-				phoneNo: "0123456",
-				address: "address",
-				// transactionPoint: OfficesInterface,
+				name: "Đặng Minh Khôi",
+				phoneNo: "01234567890",
+				address: "1 Đặng Tiến Đông",
 			},
-			// status: OrderStatus,
 		},
 		createAt: "HN",
 	},
 	{
-			orderId: 123,
-			mainCharge: 123,
+			orderId: 2088,
+			mainCharge: "90.000",
+			category:"Hàng hóa",
 			orderDelivery: {
 			id: 123,
 			fromLocation: {
@@ -43,21 +42,111 @@
 				name: "name",
 				phoneNo: "0123456",
 				address: "address",
-				// transactionPoint: OfficesInterface,
 			},
-			// currentLocation: OfficesInterface,
+
 			toLocation: {
 				id: "id",
 				customerId: 123,
 				name: "name",
 				phoneNo: "0123456",
 				address: "address",
-				// transactionPoint: OfficesInterface,
 			},
-			// status: OrderStatus,
+		},
+		createAt: "HN",
+	},
+	{
+			orderId: 2087,
+			mainCharge: "90.000",
+			category:"Tài liệu",
+			orderDelivery: {
+			id: 123,
+			fromLocation: {
+				id: "id",
+				customerId: 123,
+				name: "name",
+				phoneNo: "0123456",
+				address: "address",
+			},
+			toLocation: {
+				id: "id",
+				customerId: 123,
+				name: "name",
+				phoneNo: "0123456",
+				address: "address",
+			},
+		},
+		createAt: "HN",
+	},
+	{
+			orderId: 2087,
+			mainCharge: "90.000",
+			category:"Tài liệu",
+			orderDelivery: {
+			id: 123,
+			fromLocation: {
+				id: "id",
+				customerId: 123,
+				name: "name",
+				phoneNo: "0123456",
+				address: "address",
+			},
+			toLocation: {
+				id: "id",
+				customerId: 123,
+				name: "name",
+				phoneNo: "0123456",
+				address: "address",
+			},
+		},
+		createAt: "HN",
+	},
+	{
+			orderId: 2087,
+			mainCharge: "90.000",
+			category:"Tài liệu",
+			orderDelivery: {
+			id: 123,
+			fromLocation: {
+				id: "id",
+				customerId: 123,
+				name: "name",
+				phoneNo: "0123456",
+				address: "address",
+			},
+			toLocation: {
+				id: "id",
+				customerId: 123,
+				name: "name",
+				phoneNo: "0123456",
+				address: "address",
+			},
+		},
+		createAt: "HN",
+	},
+	{
+			orderId: 2087,
+			mainCharge: "90.000",
+			category:"Tài liệu",
+			orderDelivery: {
+			id: 123,
+			fromLocation: {
+				id: "id",
+				customerId: 123,
+				name: "name",
+				phoneNo: "0123456",
+				address: "address",
+			},
+			toLocation: {
+				id: "id",
+				customerId: 123,
+				name: "name",
+				phoneNo: "0123456",
+				address: "address",
+			},
 		},
 		createAt: "HN",
 	}
+	
 ]
 	
 </script>

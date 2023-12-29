@@ -17,6 +17,7 @@
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"@types/node": "^20.8.8",
+		"@types/toastify-js": "^1.12.3",
 		"autoprefixer": "^10.4.16",
 		"daisyui": "^3.9.3",
 		"postcss": "^8.4.31",
@@ -34,6 +35,7 @@
 		"@floating-ui/dom": "^1.5.3",
 		"axios": "^1.6.3",
 		"lucide-svelte": "^0.290.0",
+		"toastify-js": "^1.12.0",
 		"typed.js": "^2.0.16"
 	}
 }

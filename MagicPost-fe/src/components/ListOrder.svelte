@@ -35,14 +35,13 @@
 
 		<div class="flex gap-1" style="border-right: 1px solid #a3a3a3;">
 			<b>Trạng thái:</b>
-
-			<span class="flex items-center gap-1 text-greenNew">Mới </span>
+			<span class="flex  gap-1 text-greenNew">Mới </span>
 		</div>
 
 		<div class="grid grid-cols-2">
 			<span>
 				<b>Loại:</b>
-				Tài liệu hoặc Hàng hóa ?
+				{orderData.category}
 			</span>
 			<div>
 				<b>Cước phí: </b>
@@ -52,13 +51,13 @@
 
 		<div style="border-right: 1px solid #a3a3a3;">
 			<b>Người gửi:</b>
-			<p> Tên người gửi - SĐT Người gửi</p>
-			<p>Địa chỉ người gửi</p>
+			<p> {orderData.orderDelivery.fromLocation.name}</p>
+			<p>{orderData.orderDelivery.fromLocation.address}</p>
 		</div>
 		<div>
 			<b>Người nhận:</b>
-			<p> Tên người nhận - SĐT người nhận</p>
-			<p>Địa chỉ người nhận</p>
+			<p>{orderData.orderDelivery.toLocation.name}</p>
+			<p>{orderData.orderDelivery.toLocation.address}</p>
 		</div>
 	</div>
 	<div class="trail-dash" />

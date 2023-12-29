@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { ArrowLeft, Eye, FilePlus2, PlusCircle } from 'lucide-svelte';
 	import CustomerInfo from 'src/components/CustomerInfo.svelte';
 	import OrderContent from 'src/components/OrderContent.svelte';
+	import Toastify from 'toastify-js';
 
 	let packageType: 'document' | 'package';
 	let orderContents: any[] = [{ id: crypto.randomUUID(), content: '', quantity: undefined, value: undefined }];
@@ -11,6 +13,20 @@
 	}
 
 	$: console.log(packageType);
+
+	function createCustomerOrder(){
+		Toastify({
+				text: 'Tạo đơn  thành công!',
+				duration: 2000,
+				gravity: 'top',
+				position: 'center',
+				stopOnFocus: true,
+				style: {
+					background: '#56C0F0'
+				}
+			}).showToast();
+			goto("/invoice/id");
+	}
 </script>
 
 <main>
@@ -25,7 +41,10 @@
 			<button type="button" class="btn variant-filled" disabled>
 				<Eye size="20" class="mr-2" />Xem trước đơn hàng
 			</button>
-			<button type="button" class="btn variant-filled bg-[#2460E5]">
+			<button type="button" 
+			class="btn variant-filled bg-[#2460E5]"
+			on:click={createCustomerOrder}
+			>
 				<FilePlus2 size="20" class="mr-2" />Lưu và in đơn hàng
 			</button>
 		</div>
