@@ -19,10 +19,12 @@
             class="dui-input dui-input-bordered dui-input-lg w-full"
             bind:value={trackingOrder}
             />
+
             <button type="button" 
             class="btn variant-filled-secondary rounded-md w-1/5"
             on:click={() => goto(`/tracking/${trackingOrder}`)}
             >Theo dõi</button>
+			
         </div>
 			<div class="flex flex-col w-full md:flex-row px-1">
 				<div class="">
