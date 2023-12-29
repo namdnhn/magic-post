@@ -4,6 +4,7 @@
 	import OfficeModal from '../modal/OfficeModal.svelte';
 	import DeleteConfirmModal from '../modal/DeleteConfirmModal.svelte';
 	import type { Order, GatherOrderInteface } from 'src/utils/interface';
+	import Loading from 'src/components/Loading.svelte';
 
 	export let tableData: Order[] = [],
 			 tab3: boolean;
@@ -34,6 +35,11 @@
 
 	const removeItem = (itemId: any) => {
     tableData = tableData.filter(item => item.orderId !== itemId);
+	loading = true;
+	setTimeout(() => {
+      tableData = tableData.filter(item => item.orderId !== itemId);
+      loading = false;
+    }, 500);
   };
 </script>
 
@@ -65,6 +71,13 @@
 			<tbody class="h-full relative">
 				<EmptyData css="absolute top-1/4" message="Không có dữ liệu!" />
 			</tbody>
+		{:else if loading == true}
+				<td></td>
+				<td></td>
+				<td>
+					<div class="mt-11"><Loading message="Đang xử lý" /></div>
+				</td>
+			
 		{:else}
 			<tbody>
 				{#each tableData as row, i}
