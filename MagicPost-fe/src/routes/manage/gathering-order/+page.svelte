@@ -487,6 +487,8 @@ let orderData3: Order[] =
 		createAt: "HN",
 	}
 ]
+	let len1 : number;
+	$: len1 = orderData1.length;
 
 	function handleTabChange(tabName: string) {
 		if (tabName === 'tab3') {
@@ -499,10 +501,23 @@ let orderData3: Order[] =
 
 <main class="h-full">
 	<h3 class="h3 uppercase mb-3">Danh sách đơn tập kết </h3>
+	<div class="logo-cloud grid-cols-2 gap-12 w-full h-[12vh] [&>.logo-item]:bg-secondary-400 items-center text-center [&>.logo-item]:text-secondary-50">
+		<div class="logo-item text-2xl card-hover text-center">
+			<p>Số đơn đến: 5</p>
+		</div>
+		<div class="logo-item text-2xl card-hover">
+			<div>Số đơn đi: 3</div>
+		</div>
+		<!-- <div class="logo-item text-2xl card-hover ">
+			<div>oke</div>
+		</div> 	 -->
+	</div>
+	<!-- <div class="dui-divider m-0" /> -->
     <div class="card py-3 px-4 mb-3">
 		<span class="mr-2">Tìm kiếm</span>
 		<input type="text" placeholder="Nhập tên, mã đơn hàng..." class="dui-input dui-input-bordered w-full max-w-xs" />
 	</div>
+
 
 	<TabGroup rounded="rounded-tl-md rounded-tr-md" class="h-[calc(100%-6rem)]" on:change={() => handleTabChange('tab1')}>
 		<Tab bind:group={tabSet} name="tab1" value="coming" class="w-1/3">
@@ -520,7 +535,7 @@ let orderData3: Order[] =
 				{#if tabSet == 'coming'}
 					<GatherOrdersTable tableData={orderData1} tab3={tab3} />
 				{:else if tabSet == 'processing'}
-				<GatherOrdersTable tableData={orderData2} tab3={tab3} />
+				<GatherOrdersTable tableData={orderData2} tab3={tab3}/>
 				{:else if tabSet == 'forward'}
 				<GatherOrdersTable tableData={orderData3} tab3={tab3} />
 

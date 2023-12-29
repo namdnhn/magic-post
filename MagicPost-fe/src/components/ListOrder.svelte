@@ -51,12 +51,12 @@
 
 		<div style="border-right: 1px solid #a3a3a3;">
 			<b>Người gửi:</b>
-			<p> {orderData.orderDelivery.fromLocation.name}</p>
+			<p> {orderData.orderDelivery.fromLocation.name} - {orderData.orderDelivery.fromLocation.phoneNo}</p>
 			<p>{orderData.orderDelivery.fromLocation.address}</p>
 		</div>
 		<div>
 			<b>Người nhận:</b>
-			<p>{orderData.orderDelivery.toLocation.name}</p>
+			<p>{orderData.orderDelivery.toLocation.name} - {orderData.orderDelivery.toLocation.phoneNo}</p>
 			<p>{orderData.orderDelivery.toLocation.address}</p>
 		</div>
 	</div>

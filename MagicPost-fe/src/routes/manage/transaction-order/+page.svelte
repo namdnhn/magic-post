@@ -114,6 +114,14 @@ let orderData2: OrderTransaction[] =
 
 <main class="h-full">
 	<h3 class="h3 uppercase mb-3">Danh sách đơn giao dịch </h3>
+	<div class="logo-cloud grid-cols-2 gap-12 w-full h-[12vh] [&>.logo-item]:bg-secondary-400 items-center text-center [&>.logo-item]:text-secondary-50">
+		<div class="logo-item text-2xl card-hover text-center">
+			<p>Số hàng gửi: 8</p>
+		</div>
+		<div class="logo-item text-2xl card-hover">
+			<div>Số hàng nhận: 5</div>
+		</div>	
+	</div>
     <div class="card py-3 px-4 mb-3">
 		<span class="mr-2">Tìm kiếm</span>
 		<input type="text" placeholder="Nhập tên, mã đơn hàng..." class="dui-input dui-input-bordered w-full max-w-xs" />
