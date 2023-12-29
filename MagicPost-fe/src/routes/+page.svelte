@@ -5,27 +5,27 @@
 	
 	const services = [
 		{
-			name: 'Transport',
+			name: 'Vận Chuyển',
 			icon: `<i class="fa-solid fa-truck-fast"></i>`
 		},
 		{
-			name: 'Find sites',
+			name: 'Tìm văn phòng',
 			icon: `<i class="fa-solid fa-magnifying-glass-location"></i>`
 		},
 		{
-			name: 'Tracking',
+			name: 'Theo dõi',
 			icon: `<i class="fa-solid fa-map-location-dot"></i>`
 		},
 		{
-			name: 'Invoices',
+			name: 'Phiếu đơn hàng',
 			icon: `<i class="fa-solid fa-receipt"></i>`
 		},
 		{
-			name: 'Statistics',
+			name: 'Thống kê',
 			icon: `<i class="fa-solid fa-chart-line"></i>`
 		},
 		{
-			name: 'Customer Services',
+			name: 'Chăm sóc khách hàng',
 			icon: `<i class="fa-solid fa-headset"></i>`
 		}
 	];
