@@ -1,63 +1,112 @@
 <script lang="ts">
 	import { TabGroup, Tab } from '@skeletonlabs/skeleton';
 	import TransactionOrderTable from 'src/components/table/TransactionOrderTable.svelte';
-	import type { Order } from 'src/utils/interface';
+	import type { OrderTransaction } from 'src/utils/interface';
 
 	let tabSet: 'coming' | 'processing' | 'forward' = 'coming';
-	let tab3: boolean = false;
 
-	let orderData: Order[] = 
+
+	let orderData1: OrderTransaction[] = 
 		[{
 			category:"Hàng hóa",
-			orderId: 123,
-			mainCharge: "123",
-			orderDelivery: {
-			id: 123,
-			fromLocation: {
-				id: "id",
-				customerId: 123,
-				name: "name",
-				phoneNo: "0123456",
-				address: "address",
-
-			},
-			toLocation: {
-				id: "id",
-				customerId: 123,
-				name: "name",
-				phoneNo: "0123456",
-				address: "address",
-			},
-
-		},
-		createAt: "HN",
+			orderId: 2089,
+			mainCharge: "90.000",
+			date: "18/09/2023",
+			gatherPoint: "ĐTK Cầu Giấy"
 	},
 	{
-			orderId: 123,
-			mainCharge: "123",
+			orderId: 2087,
+			mainCharge: "100.000",
+			date: "22/06/2023",
+			category:"Tài liệu",
+			gatherPoint: "ĐTK Đống Đa"
+	}
+	,
+	{
+			orderId: 2086,
+			mainCharge: "20.000",
+			date: "06/06/2023",
+			category:"Tài liệu",
+			gatherPoint: "ĐTK Hoàn Kiếm"
+	}
+	,
+	{
+			orderId: 2085,
+			mainCharge: "30.000",
+			date: "02/06/2023",
+			category:"Tài liệu",
+			gatherPoint: "ĐTK Long Biên"
+	}
+	,
+	{
+			orderId: 2084,
+			mainCharge: "15.000",
+			date: "16/05/2023",
 			category:"Hàng hóa",
-			orderDelivery: {
-			id: 123,
-			fromLocation: {
-				id: "id",
-				customerId: 123,
-				name: "name",
-				phoneNo: "0123456",
-				address: "address",
-
-			},
-
-			toLocation: {
-				id: "id",
-				customerId: 123,
-				name: "name",
-				phoneNo: "0123456",
-				address: "address",
-
-			},
-
-		},
-		createAt: "HN",
+			gatherPoint: "ĐTK Xuân Thủy"
+	}
+]
+let orderData2: OrderTransaction[] = 
+		[{
+			category:"Hàng hóa",
+			orderId: 2089,
+			mainCharge: "90.000",
+			date: "18/09/2023",
+			gatherPoint: "ĐTK Cầu Giấy"
+	},
+	{
+			orderId: 2087,
+			mainCharge: "100.000",
+			date: "22/06/2023",
+			category:"Tài liệu",
+			gatherPoint: "ĐTK Đống Đa"
+	}
+	,
+	{
+			orderId: 2086,
+			mainCharge: "20.000",
+			date: "06/06/2023",
+			category:"Tài liệu",
+			gatherPoint: "ĐTK Hoàn Kiếm"
+	}
+	,
+	{
+			orderId: 2085,
+			mainCharge: "30.000",
+			date: "02/06/2023",
+			category:"Tài liệu",
+			gatherPoint: "ĐTK Long Biên"
+	}
+	,
+	{
+			orderId: 2084,
+			mainCharge: "15.000",
+			date: "16/05/2023",
+			category:"Hàng hóa",
+			gatherPoint: "ĐTK Xuân Thủy"
+	},
+	{
+			orderId: 9405,
+			mainCharge: "100.000",
+			date: "22/06/2023",
+			category:"Tài liệu",
+			gatherPoint: "ĐTK Đống Đa"
+	}
+	,
+	{
+			orderId: 7198,
+			mainCharge: "100.000",
+			date: "06/06/2023",
+			category:"Tài liệu",
+			gatherPoint: "ĐTK Hoàn Kiếm"
+	}
+	,
+	{
+			orderId: 1782,
+			mainCharge: "100.000",
+			date: "02/06/2023",
+			category:"Tài liệu",
+			gatherPoint: "ĐTK Long Biên"
 	}
 ]
 
@@ -81,9 +130,9 @@
 		<svelte:fragment slot="panel">
 			<div class="card !rounded-b-none h-full">
 				{#if tabSet == 'coming'}
-					<TransactionOrderTable tableData={orderData}  />
+					<TransactionOrderTable tableData={orderData1} tooltip={"điểm tập kết"}  />
 				{:else if tabSet == 'forward'}
-					<TransactionOrderTable tableData={orderData}  />
+					<TransactionOrderTable tableData={orderData2} tooltip={"khách hàng"} />
 				{/if}
 			</div>
 		</svelte:fragment>

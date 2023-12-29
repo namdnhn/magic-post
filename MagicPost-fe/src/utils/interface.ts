@@ -123,8 +123,15 @@ export interface Order {
 			phoneNo: string;
 			address: string;
 			// transactionPoint: OfficesInterface;
-		};
-		
+		};	
 	};
 	createAt: string;
+}
+
+export interface OrderTransaction {
+	orderId: number;
+	mainCharge: string;
+	category: string;
+	date:string;
+	gatherPoint:string;
 }

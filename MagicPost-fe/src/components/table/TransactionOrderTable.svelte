@@ -3,9 +3,11 @@
 	import EmptyData from '../EmptyData.svelte';
 	import OfficeModal from '../modal/OfficeModal.svelte';
 	import DeleteConfirmModal from '../modal/DeleteConfirmModal.svelte';
-	import type { Order, GatherOrderInteface } from 'src/utils/interface';
+	import type { OrderTransaction, GatherOrderInteface } from 'src/utils/interface';
+	import Loading from 'src/components/Loading.svelte';
 
-	export let tableData: Order[] = [];
+	export let tableData: OrderTransaction[] = [],
+				tooltip:string;
 
 	let checkedOrders: Set<any>;
 
@@ -24,13 +26,22 @@
 		}
 	}
 
-	function onSelectOrder(i: number, row: Order) {
+	function onSelectOrder(i: number, row: OrderTransaction) {
 		if (checks[i] == true) checkedOrders.add(row.orderId);
 		else checkedOrders.delete(row.orderId);
 		checkedOrders = checkedOrders;
 		if (checks.every((v) => v == true) && checks.length == tableData.length) checkAll = true;
 		if (checks[i] == false && checkAll == true) checkAll = false;
 	}
+
+	const removeItem = (itemId: any) => {
+    tableData = tableData.filter(item => item.orderId !== itemId);
+	loading = true;
+	setTimeout(() => {
+      tableData = tableData.filter(item => item.orderId !== itemId);
+      loading = false;
+    }, 500);
+  };
 </script>
 
 <div class="table-container !rounded-b-none !rounded-md h-full">
@@ -52,7 +63,9 @@
 				<th>Loại hàng</th>
 				<th>Cước phí</th>
 				<th>Ngày tạo</th>
-				<th>Điểm tập kết </th>
+				{#if tooltip == "điểm tập kết"}
+					<th>Điểm tập kết </th>	
+				{/if}
 				<th>Thao tác</th>	
 			</tr>
 		</thead>
@@ -60,6 +73,13 @@
 			<tbody class="h-full relative">
 				<EmptyData css="absolute top-1/4" message="Không có dữ liệu!" />
 			</tbody>
+			{:else if loading == true}
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<div class="mt-11"><Loading message="Đang xử lý" /></div>
+				</td>
 		{:else}
 			<tbody>
 				{#each tableData as row, i}
@@ -74,16 +94,18 @@
 							{i + 1}
 						</td>
 						<td>{row.orderId}</td>
-						<td>Loại hàng</td>
-						<td>999</td>
-						<td>date</td>
-						<td>Xuân Thủy</td>
+						<td>{row.category}</td>
+						<td>{row.mainCharge} ₫</td>
+						<td>{row.date}</td>
+						{#if tooltip == "điểm tập kết"}
+							<td>{row.gatherPoint}</td>
+						{/if}
 							<td class="flex items-center gap-3">	
-								<div class="dui-tooltip dui-tooltip-bottom" data-tip="Chuyển">
+								<div class="dui-tooltip dui-tooltip-bottom" data-tip="Chuyển đến {tooltip}">
 									<button
 									type="button"
 									class="btn-icon variant-filled h-8 w-8"
-									data-tip="Xóa"
+									on:click={() => removeItem(row.orderId)}
 								>
 									<ArrowRightFromLine size="16" />
 								</button>
